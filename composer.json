@@ -1,0 +1,41 @@
+{
+    "name": "comindware/tracker-php-api",
+    "description": "A PHP client library for accessing Comindware Tracker API",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "comindware",
+        "api"
+    ],
+    "homepage": "http://https://github.com/comindware/tracker-php-api",
+    "authors": [
+        {
+            "name": "Михаил Красильников",
+            "email": "m.krasilnikov@yandex.ru"
+        }
+    ],
+    "require": {
+        "php": "^5.5 || ^7.0",
+        "php-http/client-implementation": "^1.0",
+        "psr/log": "^1.0"
+    },
+    "require-dev": {
+        "php-http/mock-client": "^0.3",
+        "php-http/curl-client": "^1.5",
+        "phpunit/phpunit": "^4.8",
+        "satooshi/php-coveralls": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Comindware\\Tracker\\API\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Comindware\\Tracker\\API\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    }
+}
