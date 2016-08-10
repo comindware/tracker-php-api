@@ -12,10 +12,6 @@ php:
   - 7.0
   - hhvm
 
-env:
-  global:
-    - TEST_COMMAND="composer test"
-
 matrix:
   fast_finish: true
   include:
@@ -31,7 +27,8 @@ install:
   - travis_retry composer update ${COMPOSER_FLAGS} --prefer-source --no-interaction
 
 script:
-  - ${TEST_COMMAND} ${PHPUNIT_FLAGS}
+  - mkdir -p build/logs
+  - vendor/bin/phpunit ${PHPUNIT_FLAGS}
 
 after_script:
- - php vendor/bin/coveralls -v
+  - php vendor/bin/coveralls -v
