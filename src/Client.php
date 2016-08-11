@@ -142,14 +142,14 @@ class Client
     {
         $data = @json_decode($response, true);
         if (null === $data) {
-            throw new RuntimeException(json_last_error_msg());
+            throw new RuntimeException('JSON parsing failed: ' . json_last_error_msg());
         }
 
         if (!array_key_exists('response', $data)
             || !array_key_exists('success', $data)
             || !$data['success']
         ) {
-            // Fallback values.
+            // Default exception.
             $excClass = RuntimeException::class;
             $excMessage = 'Invalid server response: ' . $response;
             if (array_key_exists('error', $data)) {
