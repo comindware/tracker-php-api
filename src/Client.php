@@ -8,6 +8,7 @@
 namespace Comindware\Tracker\API;
 
 use Comindware\Tracker\API\Exception\RuntimeException;
+use Comindware\Tracker\API\Exception\WebApiClientException;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Psr\Log\LoggerInterface;
@@ -83,13 +84,14 @@ class Client
     /**
      * Send request to Tracker and return response.
      *
-     * @param string     $path    URI path relative to "/API" (e. g. "/AccountService/{id}")
+     * @param string     $path    Requested URI relative to base URI (e. g. "/Account/123")
      * @param string     $method  HTTP method (e. .g "POST")
      * @param array|null $payload Optional request payload.
      *
      * @return array|string
      *
-     * @throws \Comindware\Tracker\API\Exception\RuntimeException Or one of descendants.
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
@@ -136,7 +138,8 @@ class Client
      *
      * @return array|string
      *
-     * @throws \Comindware\Tracker\API\Exception\RuntimeException
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      */
     private function parseResponse($response)
     {
@@ -153,6 +156,7 @@ class Client
             $excClass = RuntimeException::class;
             $excMessage = 'Invalid server response: ' . $response;
             if (array_key_exists('error', $data)) {
+                $excClass = WebApiClientException::class;
                 if (array_key_exists('type', $data['error'])) {
                     $className = __NAMESPACE__ . '\\Exception\\' . $data['error']['type'];
                     if (class_exists($className)) {
