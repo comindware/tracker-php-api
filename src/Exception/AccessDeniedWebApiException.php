@@ -12,6 +12,6 @@ namespace Comindware\Tracker\API\Exception;
  *
  * @since 0.1
  */
-class AccessDeniedWebApiException extends RuntimeException
+class AccessDeniedWebApiException extends WebApiClientException
 {
 }
