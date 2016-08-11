@@ -3,7 +3,7 @@
 Класс `Comindware\Tracker\API\Client` предоставляет интерфейс низкого уровня для выполнения
 произвольных запросов к API Comindware Tracker.
 
-Для отправки запросов используется метода `sendRequest`:
+Для отправки запросов используется метод `sendRequest`:
 
     public mixed sendRequest(string $path [, string $method [, array $payload ]])
 
