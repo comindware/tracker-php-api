@@ -82,7 +82,7 @@ $ git push -f origin feature-or-bug-fix-description
 Coding standard
 ---------------
 
-This repository follows the [PSR-2 standard](git@github.com:comindware/tracker-php-api.git) and so,
+This repository follows the [PSR-2 standard](http://php-fig.org/psr/psr-2/) and so,
 if you want to contribute, you must follow these rules.
 
 
