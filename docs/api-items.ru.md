@@ -19,4 +19,4 @@ $itemId = $api->item()->createItem('tracker.123', $item);
 
 См. также:
 
-- [examples/item-create](examples/item-create.php)
+- [examples/item-create.php](examples/item-create.php)
