@@ -1,6 +1,6 @@
 # Comindware Tracker API
 
-1. [Установка]
+1. [Установка](install.ru.md)
 2. [Введение](intro.ru.md)
 3. [Методы API]
 
