@@ -17,53 +17,78 @@ namespace Comindware\Tracker\API\Model;
 class Workspace extends Model
 {
     /**
-     * Workspace identifier.
+     * Return name.
      *
-     * @var string
-     *
-     * @since 0.1
-     */
-    public $id;
-
-    /**
-     * Workspace name.
-     *
-     * @var string|null
+     * @return string|null
      *
      * @since 0.1
      */
-    public $name;
-
-    /**
-     * Workspace description.
-     *
-     * @var string|null
-     *
-     * @since 0.1
-     */
-    public $description;
-
-    /**
-     * Container identifier that contains this workspace.
-     *
-     * @var string|null
-     *
-     * @since 0.1
-     */
-    public $containerId;
-
-    /**
-     * Create Workspace from array.
-     *
-     * @param array $data
-     *
-     * @since 0.1
-     */
-    public function __construct(array $data)
+    public function getName()
     {
-        $this->id = $data['id'];
-        $this->name = array_key_exists('name', $data) ? $data['name'] : null;
-        $this->description = array_key_exists('description', $data) ? $data['description'] : null;
-        $this->containerId = array_key_exists('containerId', $data) ? $data['containerId'] : null;
+        return $this->getProperty('name');
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @since 0.1
+     */
+    public function setName($name)
+    {
+        $this->setProperty('name', (string) $name);
+    }
+
+    /**
+     * Return description.
+     *
+     * @return string|null
+     *
+     * @since 0.1
+     */
+    public function getDescription()
+    {
+        return $this->getProperty('description');
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @since 0.1
+     */
+    public function setDescription($description)
+    {
+        $this->setProperty('description', (string) $description);
+    }
+
+    /**
+     * Return container identifier that contains this workspace.
+     *
+     * @return string|null
+     *
+     * @since 0.1
+     */
+    public function getContainerId()
+    {
+        return $this->getProperty('containerId');
+    }
+
+    /**
+     * Set container identifier that contains this workspace.
+     *
+     * @param Model|string $objectOrId Container model or ID.
+     *
+     * @since 0.1
+     */
+    public function setContainerId($objectOrId)
+    {
+        if ($objectOrId instanceof Model) {
+            $objectOrId = $objectOrId->getId();
+        }
+
+        $this->setProperty('containerId', (string) $objectOrId);
     }
 }

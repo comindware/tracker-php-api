@@ -7,6 +7,8 @@
  */
 namespace Comindware\Tracker\API\Service;
 
+use Comindware\Tracker\API\Model\Item;
+
 /**
  * Item service.
  *
@@ -18,20 +20,50 @@ namespace Comindware\Tracker\API\Service;
 class ItemService extends Service
 {
     /**
-     * Create Item.
+     * Get Item.
      *
-     * @param string $id         Container ID.
-     * @param array  $properties Item properties.
+     * @param string $id Item ID.
      *
-     * @return string Created item ID.
+     * @return Item
      *
-     * @throws \Comindware\Tracker\API\Exception\RuntimeException
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
-    public function createItem($id, array $properties)
+    public function getItem($id)
     {
-        return $this->client->sendRequest($this->getBase() . '/' . $id, 'POST', $properties);
+        $response = $this->client->sendRequest($this->getBase() . '/' . $id);
+
+        return new Item($response);
+    }
+
+    /**
+     * Create Item.
+     *
+     * @param string $containerId Container ID.
+     * @param Item   $item        Item model.
+     *
+     * @return string Created item ID.
+     *
+     * @throws \InvalidArgumentException If Item has no properties.
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     *
+     * @since 0.1
+     */
+    public function createItem($containerId, Item $item)
+    {
+        $properties = $item->export()['properties'];
+        if (count($properties) === 0) {
+            throw new \InvalidArgumentException('Item should has at least one property!');
+        }
+
+        return $this->client->sendRequest(
+            $this->getBase() . '/' . $containerId,
+            'POST',
+            $properties
+        );
     }
 
     /**

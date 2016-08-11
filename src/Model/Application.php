@@ -18,72 +18,80 @@ namespace Comindware\Tracker\API\Model;
  * - documents app which creates and stores documents of the same type.
  *
  * @since 0.1
+ *
+ * TODO Добавить свойство workspaces
  */
 class Application extends Model
 {
     /**
-     * Application identifier.
+     * Return name.
      *
-     * @var string
-     *
-     * @since 0.1
-     */
-    public $id;
-
-    /**
-     * Application name.
-     *
-     * @var string
+     * @return string|null
      *
      * @since 0.1
      */
-    public $name;
-
-    /**
-     * Application description.
-     *
-     * @var string|null
-     *
-     * @since 0.1
-     */
-    public $description;
-
-    /**
-     * Application type.
-     *
-     * @var string "Task", "Document" or "Tracker".
-     *
-     * @since 0.1
-     */
-    public $kind;
-
-    /**
-     * Workspaces that contain this application.
-     *
-     * @var Workspace[]
-     *
-     * @since 0.1
-     */
-    public $workspaces;
-
-    /**
-     * Create Application from array.
-     *
-     * @param array $data
-     *
-     * @since 0.1
-     */
-    public function __construct(array $data)
+    public function getName()
     {
-        $this->id = $data['id'];
-        $this->name = $data['name'];
-        $this->description = array_key_exists('description', $data) ? $data['description'] : null;
-        $this->kind = $data['kind'];
-        $this->workspaces = [];
-        if (array_key_exists('workspaces', $data) && is_array($data['workspaces'])) {
-            foreach ($data['workspaces'] as $item) {
-                $this->workspaces[] = new Workspace($item);
-            }
-        }
+        return $this->getProperty('name');
+    }
+
+    /**
+     * Set name.
+     *
+     * @param string $name
+     *
+     * @since 0.1
+     */
+    public function setName($name)
+    {
+        $this->setProperty('name', (string) $name);
+    }
+
+    /**
+     * Return description.
+     *
+     * @return string|null
+     *
+     * @since 0.1
+     */
+    public function getDescription()
+    {
+        return $this->getProperty('description');
+    }
+
+    /**
+     * Set description.
+     *
+     * @param string $description
+     *
+     * @since 0.1
+     */
+    public function setDescription($description)
+    {
+        $this->setProperty('description', (string) $description);
+    }
+
+    /**
+     * Return application type.
+     *
+     * @return string|null "Task", "Document" or "Tracker".
+     *
+     * @since 0.1
+     */
+    public function getType()
+    {
+        return $this->getProperty('kind');
+    }
+
+    /**
+     * Set application type.
+     *
+     * @param string $kind "Task", "Document" or "Tracker".
+     *
+     * @since 0.1
+     */
+    public function setType($kind)
+    {
+        $this->setProperty('kind', (string) $kind);
     }
 }
