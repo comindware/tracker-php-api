@@ -62,10 +62,10 @@ class Client
     /**
      * Create new Tracker API client.
      *
-     * @param string     $baseUri        Comindware Tracker root URI.
-     * @param string     $token          Authentication token.
-     * @param HttpClient $httpClient     HTTP client.
-     * @param            $messageFactory $messageFactory HTTP message factory.
+     * @param string         $baseUri        Comindware Tracker root URI.
+     * @param string         $token          Authentication token.
+     * @param HttpClient     $httpClient     HTTP client.
+     * @param MessageFactory $messageFactory HTTP message factory.
      *
      * @since 0.1
      */
