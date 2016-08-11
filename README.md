@@ -1,6 +1,6 @@
 # Comindware Tracker API (PHP)
 
-A PHP client library for accessing Comindware Tracker API.
+A PHP client library for accessing [Comindware Tracker](https://comindware.com/tracker/) API.
 
 [![Latest Stable Version](https://poser.pugx.org/comindware/tracker-php-api/v/stable.png)](https://packagist.org/packages/comindware/tracker-php-api)
 [![License](https://poser.pugx.org/comindware/tracker-php-api/license.png)](https://packagist.org/packages/comindware/tracker-php-api)
