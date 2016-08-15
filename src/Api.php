@@ -9,6 +9,7 @@ namespace Comindware\Tracker\API;
 
 use Comindware\Tracker\API\Service\AccountService;
 use Comindware\Tracker\API\Service\AppService;
+use Comindware\Tracker\API\Service\AttachmentService;
 use Comindware\Tracker\API\Service\AuthenticationService;
 use Comindware\Tracker\API\Service\CommentService;
 use Comindware\Tracker\API\Service\DataService;
@@ -90,6 +91,18 @@ class Api
     public function app()
     {
         return $this->getService(AppService::class);
+    }
+
+    /**
+     * Return Attachment service.
+     *
+     * @return AttachmentService
+     *
+     * @since 0.1
+     */
+    public function attachment()
+    {
+        return $this->getService(AttachmentService::class);
     }
 
     /**

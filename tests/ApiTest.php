@@ -9,6 +9,7 @@ namespace Comindware\Tracker\API\Tests;
 
 use Comindware\Tracker\API\Api;
 use Comindware\Tracker\API\Client;
+use Comindware\Tracker\API\Service\AttachmentService;
 
 /**
  * Tests for Comindware\Tracker\API\Api
@@ -27,5 +28,17 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $api = new Api($client);
 
         static::assertSame($client, $api->getClient());
+    }
+
+    /**
+     * Api::attachment() should return an instance of AttachmentService.
+     */
+    public function testAttachment()
+    {
+        /** @var Client $client */
+        $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
+        $api = new Api($client);
+
+        static::assertInstanceOf(AttachmentService::class, $api->attachment());
     }
 }
