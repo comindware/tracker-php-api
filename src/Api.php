@@ -57,6 +57,18 @@ class Api
     }
 
     /**
+     * Return Tracker API client.
+     *
+     * @return Client
+     *
+     * @since 0.1
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
      * Return Account service.
      *
      * @return AccountService
@@ -222,7 +234,7 @@ class Api
     private function getService($class)
     {
         if (!array_key_exists($class, $this->services)) {
-            $this->services[$class] = new $class($this->client);
+            $this->services[$class] = new $class($this->getClient());
         }
 
         return $this->services[$class];
