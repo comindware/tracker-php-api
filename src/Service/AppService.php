@@ -23,7 +23,9 @@ class AppService extends Service
      *
      * @return Application[]
      *
-     * @throws \Comindware\Tracker\API\Exception\RuntimeException
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
@@ -49,7 +51,9 @@ class AppService extends Service
      *
      * @return Application
      *
-     * @throws \Comindware\Tracker\API\Exception\RuntimeException
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
@@ -59,6 +63,7 @@ class AppService extends Service
         if (!is_array($response)) {
             throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
         }
+
         return new Application($response);
     }
 

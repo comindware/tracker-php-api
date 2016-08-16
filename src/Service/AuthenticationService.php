@@ -24,7 +24,8 @@ class AuthenticationService extends Service
      *
      * @return string TODO Describe.
      *
-     * @throws \Comindware\Tracker\API\Exception\RuntimeException
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */

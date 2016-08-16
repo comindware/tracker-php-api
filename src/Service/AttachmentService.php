@@ -27,8 +27,6 @@ class AttachmentService extends Service
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      *
      * @since 0.1
      */

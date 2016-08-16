@@ -28,7 +28,7 @@ $item->set('description', '<h1>Foo</h1> <p>Bar baz.</p>');
 
 $appId = 'tracker.157'; // Set to your own.
 
-$id = $tracker->item()->createItem($appId, $item);
+$id = $tracker->item()->create($appId, $item);
 $item = $tracker->item()->getItem($id);
 $tracker->attachment()->create($item->getId(), __FILE__);
 

@@ -52,7 +52,7 @@ class ItemService extends Service
      *
      * @since 0.1
      */
-    public function createItem($containerId, Item $item)
+    public function create($containerId, Item $item)
     {
         $properties = $item->export()['properties'];
         if (count($properties) === 0) {

@@ -116,8 +116,6 @@ class Client
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
-     * @throws \InvalidArgumentException
-     * @throws \RuntimeException
      *
      * @since 0.1
      */
@@ -131,7 +129,11 @@ class Client
             case is_resource($payload):
             case is_string($payload):
                 $builder = $this->getMultipartStreamBuilder();
-                $builder->addResource('file', $this->streamFactory->createStream($payload));
+                try {
+                    $builder->addResource('file', $this->streamFactory->createStream($payload));
+                } catch (\Exception $e) {
+                    throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+                }
                 $body = $builder->build();
                 $headers['Content-type']
                     = 'multipart/form-data; boundary=' . $builder->getBoundary();
