@@ -8,6 +8,7 @@
 namespace Comindware\Tracker\API\Tests;
 
 use Comindware\Tracker\API\Client;
+use Comindware\Tracker\API\Util\File\LocalFile;
 use Http\Client\Exception\TransferException;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\StreamFactoryDiscovery;
@@ -108,6 +109,38 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         static::assertEquals('{"bar":"baz"}', (string) $request->getBody());
 
         static::assertEquals(['foo' => 'bar'], $response);
+    }
+
+    /**
+     * When POSTing files content type should multipart/form-data.
+     */
+    public function testSendRequestPostFiles()
+    {
+        $httpClient = new HttpClient();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
+
+        $httpClient->addResponse(
+            $messageFactory->createResponse(200, 'OK', [], '{"success":true,"response":"foo"}')
+        );
+
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
+
+        $client->sendRequest('Foo/Bar', 'POST', ['foo' => 'bar', 'boo' => new LocalFile(__FILE__)]);
+
+        $requests = $httpClient->getRequests();
+        static::assertCount(1, $requests);
+        $request = $requests[0];
+        static::assertEquals('POST', $request->getMethod());
+        static::assertTrue($request->hasHeader('Content-type'));
+        static::assertContains('multipart/form-data', $request->getHeaderLine('Content-type'));
+        static::assertContains(file_get_contents(__FILE__), (string) $request->getBody());
     }
 
     /**

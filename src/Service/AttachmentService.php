@@ -7,6 +7,8 @@
  */
 namespace Comindware\Tracker\API\Service;
 
+use Comindware\Tracker\API\Util\File\File;
+
 /**
  * Attachment service.
  *
@@ -21,7 +23,7 @@ class AttachmentService extends Service
      * Create {@see \Comindware\Tracker\API\Model\Attachment}.
      *
      * @param string $itemId {@see \Comindware\Tracker\API\Model\Item} ID.
-     * @param string $filename Attachment file name.
+     * @param File   $file   File to attach.
      *
      * @return string Created attachment ID.
      *
@@ -30,12 +32,12 @@ class AttachmentService extends Service
      *
      * @since 0.1
      */
-    public function create($itemId, $filename)
+    public function create($itemId, File $file)
     {
         return $this->client->sendRequest(
             $this->getBase() . '/' . $itemId,
             'POST',
-            fopen($filename, 'r')
+            ['file' => $file]
         );
     }
 

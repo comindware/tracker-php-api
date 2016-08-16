@@ -9,10 +9,12 @@ namespace Comindware\Tracker\API;
 
 use Comindware\Tracker\API\Exception\RuntimeException;
 use Comindware\Tracker\API\Exception\WebApiClientException;
+use Comindware\Tracker\API\Util\File\File;
 use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Http\Message\StreamFactory;
+use Psr\Http\Message\RequestInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -103,14 +105,12 @@ class Client
     /**
      * Send request to Tracker and return response.
      *
-     * Payload can be:
-     * - an array of key/value pairs — to send parameters;
-     * - a resource — to send a file;
-     * - a string — to send binary data.
+     * Payload should an associative array with scalar, array or
+     * {@see Comindware\Tracker\API\Util\File\File} values.
      *
-     * @param string $path    Requested URI relative to base URI (e. g. "/Account/123")
-     * @param string $method  HTTP method (e. .g "POST")
-     * @param mixed  $payload Optional request payload.
+     * @param string     $path    Requested URI relative to base URI (e. g. "/Api/Account/123")
+     * @param string     $method  HTTP method (e. g. "POST")
+     * @param array|null $payload Optional request payload. See method description for details.
      *
      * @return array|string
      *
@@ -119,33 +119,19 @@ class Client
      *
      * @since 0.1
      */
-    public function sendRequest($path, $method = 'GET', $payload = null)
+    public function sendRequest($path, $method = 'GET', array $payload = null)
     {
         $this->getLogger()->debug(sprintf('%s %s', $method, $path));
 
-        $uri = $this->baseUri . '/' . ltrim($path, '/');
-        $headers = ['apiKey' => $this->token];
-        switch (true) {
-            case is_resource($payload):
-            case is_string($payload):
-                $builder = $this->getMultipartStreamBuilder();
-                try {
-                    $builder->addResource('file', $this->streamFactory->createStream($payload));
-                } catch (\Exception $e) {
-                    throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
-                }
-                $body = $builder->build();
-                $headers['Content-type']
-                    = 'multipart/form-data; boundary=' . $builder->getBoundary();
-                break;
-            case is_array($payload):
-                $headers['Content-type'] = 'application/json';
-                $body = json_encode($payload);
-                break;
-            default:
-                $body = null;
+        $request = $this->messageFactory->createRequest(
+            $method,
+            $this->baseUri . '/' . ltrim($path, '/'),
+            ['apiKey' => $this->token]
+        );
+
+        if ($payload) {
+            $request = $this->buildRequestBody($request, $payload);
         }
-        $request = $this->messageFactory->createRequest($method, $uri, $headers, $body);
 
         try {
             $response = $this->httpClient->sendRequest($request);
@@ -172,6 +158,62 @@ class Client
     public function setLogger(LoggerInterface $logger)
     {
         $this->logger = $logger;
+    }
+
+    /**
+     * Build request body from a given payload.
+     *
+     * @param RequestInterface $request
+     * @param array            $payload
+     *
+     * @return RequestInterface
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException
+     */
+    private function buildRequestBody(RequestInterface $request, array $payload)
+    {
+        $hasFiles = false;
+        foreach ($payload as $value) {
+            if ($value instanceof File) {
+                $hasFiles = true;
+                break;
+            }
+        }
+
+        if ($hasFiles) {
+            $builder = $this->getMultipartStreamBuilder();
+            foreach ($payload as $key => $value) {
+                if ($value instanceof File) {
+                    $builder->addResource(
+                        $key,
+                        $value->getResource(),
+                        ['filename' => $value->getFilename()]
+                    );
+                } else {
+                    $builder->addResource($key, $value);
+                }
+            }
+
+            try {
+                $request = $request
+                    ->withHeader(
+                        'Content-type',
+                        'multipart/form-data; boundary=' . $builder->getBoundary()
+                    )
+                    ->withBody($builder->build());
+            } catch (\Exception $e) {
+                throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+            }
+        } else {
+            try {
+                $request = $request
+                    ->withHeader('Content-type', 'application/json')
+                    ->withBody($this->streamFactory->createStream(json_encode($payload)));
+            } catch (\Exception $e) {
+                throw new RuntimeException($e->getMessage(), $e->getCode(), $e);
+            }
+        }
+
+        return $request;
     }
 
     /**

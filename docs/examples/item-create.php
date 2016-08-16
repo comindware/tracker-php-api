@@ -7,6 +7,7 @@ namespace Comindware\Tracker\API\Examples;
 use Comindware\Tracker\API\Api;
 use Comindware\Tracker\API\Client;
 use Comindware\Tracker\API\Model\Item;
+use Comindware\Tracker\API\Util\File\LocalFile;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\StreamFactoryDiscovery;
@@ -30,7 +31,7 @@ $appId = 'tracker.157'; // Set to your own.
 
 $id = $tracker->item()->create($appId, $item);
 $item = $tracker->item()->getItem($id);
-$tracker->attachment()->create($item->getId(), __FILE__);
+$tracker->attachment()->create($item->getId(), new LocalFile(__FILE__, 'foo.txt'));
 
 printf(
     "App: %s\nType: %s\nCreator: %s\nCreated: %s\n",
