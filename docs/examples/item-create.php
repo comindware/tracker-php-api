@@ -9,6 +9,7 @@ use Comindware\Tracker\API\Client;
 use Comindware\Tracker\API\Model\Item;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\StreamFactoryDiscovery;
 
 require __DIR__ . '/inc/init.php';
 
@@ -16,7 +17,8 @@ $client = new Client(
     getenv('TRACKER_URI'),
     getenv('TRACKER_TOKEN'),
     HttpClientDiscovery::find(),
-    MessageFactoryDiscovery::find()
+    MessageFactoryDiscovery::find(),
+    StreamFactoryDiscovery::find()
 );
 $tracker = new Api($client);
 
@@ -28,6 +30,7 @@ $appId = 'tracker.157'; // Set to your own.
 
 $id = $tracker->item()->createItem($appId, $item);
 $item = $tracker->item()->getItem($id);
+$tracker->attachment()->create($item->getId(), __FILE__);
 
 printf(
     "App: %s\nType: %s\nCreator: %s\nCreated: %s\n",

@@ -10,6 +10,7 @@ namespace Comindware\Tracker\API\Tests;
 use Comindware\Tracker\API\Client;
 use Http\Client\Exception\TransferException;
 use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\StreamFactoryDiscovery;
 use Http\Mock\Client as HttpClient;
 
 /**
@@ -25,13 +26,25 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestGet()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
         $httpClient->addResponse(
-            $factory->createResponse(200, 'OK', [], '{"success":true,"response":{"foo":"bar"}}')
+            $messageFactory->createResponse(
+                200,
+                'OK',
+                [],
+                '{"success":true,"response":{"foo":"bar"}}'
+            )
         );
 
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
 
         $response = $client->sendRequest('Foo/Bar');
 
@@ -42,8 +55,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         static::assertEquals(
             [
                 'apiKey' => ['my.token'],
-                'Host' => ['example.com'],
-                'Content-type' => ['application/json']
+                'Host' => ['example.com']
             ],
             $request->getHeaders()
         );
@@ -58,13 +70,25 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestPost()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
         $httpClient->addResponse(
-            $factory->createResponse(200, 'OK', [], '{"success":true,"response":{"foo":"bar"}}')
+            $messageFactory->createResponse(
+                200,
+                'OK',
+                [],
+                '{"success":true,"response":{"foo":"bar"}}'
+            )
         );
 
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
 
         $response = $client->sendRequest('Foo/Bar', 'POST', ['bar' => 'baz']);
 
@@ -95,10 +119,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestHttpClientFailed()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
         $httpClient->addException(new TransferException('Foo bar'));
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
         $client->sendRequest('Foo');
     }
 
@@ -111,10 +142,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestFailureCode()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
-        $httpClient->addResponse($factory->createResponse(404, 'Not Found'));
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $httpClient->addResponse($messageFactory->createResponse(404, 'Not Found'));
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
         $client->sendRequest('Foo');
     }
 
@@ -127,10 +165,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestInvalidJson()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
-        $httpClient->addResponse($factory->createResponse(200, 'OK', [], 'Boo'));
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $httpClient->addResponse($messageFactory->createResponse(200, 'OK', [], 'Boo'));
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
         $client->sendRequest('Foo');
     }
 
@@ -143,10 +188,17 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestNoRequiredProperties()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
-        $httpClient->addResponse($factory->createResponse(200, 'OK', [], '{"foo":"bar"}'));
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $httpClient->addResponse($messageFactory->createResponse(200, 'OK', [], '{"foo":"bar"}'));
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
         $client->sendRequest('Foo');
     }
 
@@ -159,17 +211,24 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     public function testSendRequestException()
     {
         $httpClient = new HttpClient();
-        $factory = MessageFactoryDiscovery::find();
+        $messageFactory = MessageFactoryDiscovery::find();
+        $streamFactory = StreamFactoryDiscovery::find();
 
         $httpClient->addResponse(
-            $factory->createResponse(
+            $messageFactory->createResponse(
                 200,
                 'OK',
                 [],
                 '{"success":false,"error":{"type":"WebApiClientException","message":"Foo bar"}}'
             )
         );
-        $client = new Client('http://example.com', 'my.token', $httpClient, $factory);
+        $client = new Client(
+            'http://example.com',
+            'my.token',
+            $httpClient,
+            $messageFactory,
+            $streamFactory
+        );
         $client->sendRequest('Foo');
     }
 }

@@ -6,7 +6,7 @@
 
    - [Учётные записи (Accounts)]
    - [Приложения (Applications)]
-   - [Вложения (Attachments)]
+   - [Вложения (Attachments)](api-attachment.ru.md)
    - [Аутентификация (Authentication)]
    - [Комментарии (Comments)]
    - [Данные (Data)]
