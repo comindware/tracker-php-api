@@ -16,7 +16,6 @@ use Comindware\Tracker\API\Service\DataService;
 use Comindware\Tracker\API\Service\DataSetService;
 use Comindware\Tracker\API\Service\FavoriteService;
 use Comindware\Tracker\API\Service\ItemService;
-use Comindware\Tracker\API\Service\ItemsService;
 use Comindware\Tracker\API\Service\PrototypeService;
 use Comindware\Tracker\API\Service\Service;
 use Comindware\Tracker\API\Service\TimespentService;
@@ -172,21 +171,9 @@ class Api
      *
      * @since 0.1
      */
-    public function item()
-    {
-        return $this->getService(ItemService::class);
-    }
-
-    /**
-     * Return Items service.
-     *
-     * @return ItemsService
-     *
-     * @since 0.1
-     */
     public function items()
     {
-        return $this->getService(ItemsService::class);
+        return $this->getService(ItemService::class);
     }
 
     /**

@@ -7,6 +7,7 @@
  */
 namespace Comindware\Tracker\API\Service;
 
+use Comindware\Tracker\API\Exception\UnexpectedValueException;
 use Comindware\Tracker\API\Model\Item;
 
 /**
@@ -27,15 +28,20 @@ class ItemService extends Service
      * @return Item
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
-    public function getItem($id)
+    public function get($id)
     {
         $response = $this->client->sendRequest($this->getBase() . '/' . $id);
 
-        return new Item($response);
+        try {
+            return new Item($response);
+        } catch (\InvalidArgumentException $e) {
+            throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

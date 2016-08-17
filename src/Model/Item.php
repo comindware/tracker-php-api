@@ -10,7 +10,7 @@ namespace Comindware\Tracker\API\Model;
 /**
  * Item.
  *
- * TODO Дописать свойства.
+ * Document, request, task, etc.
  *
  * @since 0.1
  */
@@ -20,6 +20,8 @@ class Item extends Model
      * Create new Item.
      *
      * @param array|null $data Data that should be imported into model.
+     *
+     * @throws \InvalidArgumentException If missing any of the required keys.
      *
      * @since 0.1
      */
@@ -119,6 +121,8 @@ class Item extends Model
      *
      * @return Account|null
      *
+     * @throws \UnexpectedValueException
+     *
      * @since 0.1
      */
     public function getCreator()
@@ -126,9 +130,13 @@ class Item extends Model
         return $this->getCachedProperty(
             'creator',
             function () {
-                return $this->getValue('creator')
-                    ? new Account($this->getValue('creator'))
-                    : null;
+                try {
+                    return $this->getValue('creator')
+                        ? new Account($this->getValue('creator'))
+                        : null;
+                } catch (\InvalidArgumentException $e) {
+                    throw new \UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+                }
             }
         );
     }
@@ -137,6 +145,8 @@ class Item extends Model
      * Set Item creator.
      *
      * @param Account|string $objectOrId User or his ID.
+     *
+     * @throws \InvalidArgumentException
      *
      * @since 0.1
      */
@@ -183,6 +193,41 @@ class Item extends Model
         }
 
         $this->setValue('creationDate', (string) $time);
+    }
+
+    /**
+     * Return modification date and time.
+     *
+     * @return \DateTimeImmutable|null
+     *
+     * @since 0.1
+     */
+    public function getUpdatedAt()
+    {
+        return $this->getCachedProperty(
+            'lastModified',
+            function () {
+                return $this->getValue('lastModified')
+                    ? new \DateTimeImmutable($this->getValue('lastModified'))
+                    : null;
+            }
+        );
+    }
+
+    /**
+     * Set modification date and time.
+     *
+     * @param \DateTimeInterface|string $time
+     *
+     * @since 0.1
+     */
+    public function setUpdatedAt($time)
+    {
+        if ($time instanceof \DateTimeInterface) {
+            $time = $time->format(DATE_RFC3339);
+        }
+
+        $this->setValue('lastModified', (string) $time);
     }
 
     /**
