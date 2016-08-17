@@ -29,7 +29,7 @@ class WorkspaceService extends Service
      *
      * @since 0.1
      */
-    public function getWorkspaces()
+    public function getAll()
     {
         $response = $this->client->sendRequest($this->getBase());
         $result = [];
@@ -38,7 +38,11 @@ class WorkspaceService extends Service
         }
         /** @var array $response */
         foreach ($response as $item) {
-            $result[] = new Workspace($item);
+            try {
+                $result[] = new Workspace($item);
+            } catch (\InvalidArgumentException $e) {
+                throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+            }
         }
 
         return $result;
@@ -57,13 +61,18 @@ class WorkspaceService extends Service
      *
      * @since 0.1
      */
-    public function getWorkspace($id)
+    public function get($id)
     {
         $response = $this->client->sendRequest($this->getBase() . '/' . $id);
         if (!is_array($response)) {
             throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
         }
-        return new Workspace($response);
+
+        try {
+            return new Workspace($response);
+        } catch (\InvalidArgumentException $e) {
+            throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

@@ -21,7 +21,7 @@ $client = new Client(
 );
 $tracker = new Api($client);
 
-$workspaces = $tracker->workspace()->getWorkspaces();
+$workspaces = $tracker->workspaces()->getAll();
 foreach ($workspaces as $workspace) {
     printf(
         "%s: %s (%s)\n",

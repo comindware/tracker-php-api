@@ -89,7 +89,11 @@ class AccountService extends Service
         $result = [];
         $items = $dataSet->exportItems();
         foreach ($items as $item) {
-            $result[] = new Account($item);
+            try {
+                $result[] = new Account($item);
+            } catch (\InvalidArgumentException $e) {
+                throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+            }
         }
 
         return $result;
@@ -115,7 +119,11 @@ class AccountService extends Service
             throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
         }
 
-        return new Account($response);
+        try {
+            return new Account($response);
+        } catch (\InvalidArgumentException $e) {
+            throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

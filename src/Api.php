@@ -232,7 +232,7 @@ class Api
      *
      * @since 0.1
      */
-    public function workspace()
+    public function workspaces()
     {
         return $this->getService(WorkspaceService::class);
     }
