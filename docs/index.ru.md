@@ -2,8 +2,7 @@
 
 1. [Установка](install.ru.md)
 2. [Введение](intro.ru.md)
-3. [Методы API]
-
+3. Методы API
    - [Учётные записи (Accounts)](api-account.ru.md)
    - [Приложения (Applications)]
    - [Вложения (Attachments)](api-attachment.ru.md)
@@ -19,7 +18,8 @@
    - [Рабочие пространства (Workspaces)]
 4. [Модели данных](models.ru.md)
 5. [Ошибки](errors.ru.md)
-6. [Низкоуровневый клиент](client.ru.md)
+6. [Прочие типы данных](types.ru.md)
+7. [Низкоуровневый клиент](client.ru.md)
 
 ---
 

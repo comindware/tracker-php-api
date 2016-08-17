@@ -2,8 +2,7 @@
 
 1. [Installation]
 2. [Introduction]
-3. [API methods]
-
+3. API methods
    - [Accounts]
    - [Applications]
    - [Attachments]
@@ -19,7 +18,8 @@
    - [Workspaces]
 4. [Data models]
 5. [Errors]
-6. [Low-level client]
+6. [Other data types]
+7. [Low-level client]
 
 ---
 
