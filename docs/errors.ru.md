@@ -6,3 +6,4 @@
 - `WebApiClientException` — Ошибка со стороны клиента.
   - `AccessDeniedWebApiException` — Доступ к ресурсу запрещён.
   - `NotAuthorizedWebApiException` — Пользователь не идентифицирован или учётная запись отключена.
+  - `ObjectNotFoundWebApiException` — Запрошенный объект не найден.
