@@ -117,7 +117,7 @@ class Item extends Model
     /**
      * Return Item creator.
      *
-     * @return Account|null
+     * @return User|null
      *
      * @since 0.1
      */
@@ -127,7 +127,7 @@ class Item extends Model
             'creator',
             function () {
                 return $this->getProperty('creator')
-                    ? new Account($this->getProperty('creator'))
+                    ? new User($this->getProperty('creator'))
                     : null;
             }
         );
@@ -136,15 +136,15 @@ class Item extends Model
     /**
      * Set Item creator.
      *
-     * @param Account|string $objectOrId Account or its ID.
+     * @param User|string $objectOrId User or his ID.
      *
      * @since 0.1
      */
     public function setCreator($objectOrId)
     {
         $this->dropCachedProperty('creator');
-        if (!$objectOrId instanceof Account) {
-            $objectOrId = new Account(['id' => $objectOrId]);
+        if (!$objectOrId instanceof User) {
+            $objectOrId = new User(['id' => $objectOrId]);
         }
 
         $this->setProperty('creator', $objectOrId->export());

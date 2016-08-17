@@ -76,7 +76,7 @@ class Api
      *
      * @since 0.1
      */
-    public function account()
+    public function accounts()
     {
         return $this->getService(AccountService::class);
     }

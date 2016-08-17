@@ -8,33 +8,33 @@
 namespace Comindware\Tracker\API\Model;
 
 /**
- * Account.
+ * User model.
  *
  * @since 0.1
  */
-class Account extends Model
+class User extends Model
 {
     /**
-     * Return name.
+     * Return full name.
      *
      * @return string|null
      *
      * @since 0.1
      */
-    public function getName()
+    public function getFullName()
     {
-        return $this->getProperty('name');
+        return $this->getProperty('fullName');
     }
 
     /**
-     * Set name.
+     * Set full name.
      *
      * @param string $name
      *
      * @since 0.1
      */
-    public function setName($name)
+    public function setFullName($name)
     {
-        $this->setProperty('name', (string) $name);
+        $this->setProperty('fullName', (string) $name);
     }
 }

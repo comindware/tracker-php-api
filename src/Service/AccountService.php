@@ -7,6 +7,9 @@
  */
 namespace Comindware\Tracker\API\Service;
 
+use Comindware\Tracker\API\Exception\UnexpectedValueException;
+use Comindware\Tracker\API\Model\Account;
+
 /**
  * Account service.
  *
@@ -44,17 +47,26 @@ class AccountService extends Service
     }
 
     /**
-     * TODO Describe.
+     * Get account by ID.
+     *
+     * @param string $id Account ID.
+     *
+     * @return Account
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
-    public function getAccount($id)
+    public function get($id)
     {
-        // FIXME
-        return $this->client->sendRequest($this->getBase() . '/' . $id);
+        $response = $this->client->sendRequest($this->getBase() . '/' . $id);
+        if (!is_array($response)) {
+            throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
+        }
+
+        return new Account($response);
     }
 
     /**

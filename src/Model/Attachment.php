@@ -148,7 +148,7 @@ class Attachment extends Model
     /**
      * Return Attachment author.
      *
-     * @return Account|null
+     * @return User|null
      *
      * @since 0.1
      */
@@ -158,7 +158,7 @@ class Attachment extends Model
             'author',
             function () {
                 return $this->getProperty('author')
-                    ? new Account($this->getProperty('author'))
+                    ? new User($this->getProperty('author'))
                     : null;
             }
         );
@@ -167,15 +167,15 @@ class Attachment extends Model
     /**
      * Set Attachment author.
      *
-     * @param Account|string $objectOrId Account or its ID.
+     * @param User|string $objectOrId User or his ID.
      *
      * @since 0.1
      */
     public function setAuthor($objectOrId)
     {
         $this->dropCachedProperty('author');
-        if (!$objectOrId instanceof Account) {
-            $objectOrId = new Account(['id' => $objectOrId]);
+        if (!$objectOrId instanceof User) {
+            $objectOrId = new User(['id' => $objectOrId]);
         }
 
         $this->setProperty('author', $objectOrId->export());

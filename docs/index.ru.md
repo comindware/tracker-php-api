@@ -4,7 +4,7 @@
 2. [Введение](intro.ru.md)
 3. [Методы API]
 
-   - [Учётные записи (Accounts)]
+   - [Учётные записи (Accounts)](api-account.ru.md)
    - [Приложения (Applications)]
    - [Вложения (Attachments)](api-attachment.ru.md)
    - [Аутентификация (Authentication)]
@@ -17,7 +17,8 @@
    - [Затраченное время (Timespent)]
    - [Рабочие процессы (Workflows)]
    - [Рабочие пространства (Workspaces)]
-4. [Низкоуровневый клиент](client.ru.md)
+4. [Модели данных](models.ru.md)
+5. [Низкоуровневый клиент](client.ru.md)
 
 ---
 
