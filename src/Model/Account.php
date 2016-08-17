@@ -19,6 +19,8 @@ class Account extends Model
      *
      * @param array|null $data Data that should be imported into model.
      *
+     * @throws \InvalidArgumentException If missing any of the required keys.
+     *
      * @since 0.1
      */
     public function __construct(array $data = null)

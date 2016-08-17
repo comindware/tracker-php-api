@@ -6,8 +6,6 @@
 
 Метод API: `POST /Api/Account/Avatar`
 
-Возвращает аватары указанных учётных записей.
-
 ```php
 public function AccountService::getAvatars(array $accounts): FileStruct[]
 ```
@@ -19,7 +17,7 @@ public function AccountService::getAvatars(array $accounts): FileStruct[]
 
 ### Возвращаемые значения
 
-Массив [FileStruct](types.ru.md#filestruct).
+Массив [FileStruct](types.ru.md#filestruct) — аватары указанных учётных записей.
 
 ### Ошибки
 
@@ -44,7 +42,7 @@ public function AccountService::getAll(): Account[]
 ```
 ### Возвращаемые значения
 
-Массив [Account](models.ru.md#account).
+Массив [Account](models.ru.md#account) — учётные записи.
 
 ### Ошибки
 
@@ -73,7 +71,7 @@ public function AccountService::get(string $id): Account
 
 ### Возвращаемые значения
 
-[Account](models.ru.md#account).
+[Account](models.ru.md#account) — запрошенная учётная запись.
 
 ### Ошибки
 
