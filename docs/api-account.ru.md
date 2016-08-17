@@ -16,5 +16,4 @@ $accounts = $api->accounts()->getAll();
 $account = $api->accounts()->get('account.123');
 ```
 
-Возвращает модель [Account](models.ru.md#Account).
-
+Возвращает [Account](models.ru.md#Account).
