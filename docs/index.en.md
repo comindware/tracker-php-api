@@ -18,7 +18,8 @@
    - [Workflows]
    - [Workspaces]
 4. [Data models]
-5. [Low-level client]
+5. [Errors]
+6. [Low-level client]
 
 ---
 
