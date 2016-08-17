@@ -99,7 +99,7 @@ class Api
      *
      * @since 0.1
      */
-    public function attachment()
+    public function attachments()
     {
         return $this->getService(AttachmentService::class);
     }

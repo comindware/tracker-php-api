@@ -31,7 +31,7 @@ $appId = 'tracker.157'; // Set to your own.
 
 $id = $tracker->item()->create($appId, $item);
 $item = $tracker->item()->getItem($id);
-$tracker->attachment()->create($item->getId(), new LocalFile(__FILE__, 'foo.txt'));
+$tracker->attachments()->create($item->getId(), new LocalFile(__FILE__, 'foo.txt'));
 
 printf(
     "App: %s\nType: %s\nCreator: %s\nCreated: %s\n",

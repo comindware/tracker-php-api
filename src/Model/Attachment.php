@@ -150,6 +150,8 @@ class Attachment extends Model
      *
      * @return Account|null
      *
+     * @throws \UnexpectedValueException
+     *
      * @since 0.1
      */
     public function getAuthor()
@@ -157,9 +159,13 @@ class Attachment extends Model
         return $this->getCachedProperty(
             'author',
             function () {
-                return $this->getValue('author')
-                    ? new Account($this->getValue('author'))
-                    : null;
+                try {
+                    return $this->getValue('author')
+                        ? new Account($this->getValue('author'))
+                        : null;
+                } catch (\InvalidArgumentException $e) {
+                    throw new \UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+                }
             }
         );
     }
@@ -168,6 +174,8 @@ class Attachment extends Model
      * Set Attachment author.
      *
      * @param Account|string $objectOrId User or his ID.
+     *
+     * @throws \InvalidArgumentException
      *
      * @since 0.1
      */

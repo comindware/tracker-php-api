@@ -5,7 +5,7 @@
 3. Методы API
    - [Учётные записи (Accounts)](api-accounts.ru.md)
    - [Приложения (Applications)]
-   - [Вложения (Attachments)](api-attachment.ru.md)
+   - [Вложения (Attachments)](api-attachments.ru.md)
    - [Аутентификация (Authentication)]
    - [Комментарии (Comments)]
    - [Данные (Data)]

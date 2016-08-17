@@ -39,6 +39,6 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
         $api = new Api($client);
 
-        static::assertInstanceOf(AttachmentService::class, $api->attachment());
+        static::assertInstanceOf(AttachmentService::class, $api->attachments());
     }
 }
