@@ -10,28 +10,34 @@ namespace Comindware\Tracker\API\Tests\Model;
 use Comindware\Tracker\API\Model\Model;
 
 /**
- * Tests for Comindware\Tracker\API\Model\Model
- *
- * @covers Comindware\Tracker\API\Model\Model
+ * Tests for Comindware\Tracker\API\Model\Model.
  */
 class ModelTest extends \PHPUnit_Framework_TestCase
 {
     /**
-     * Test import/export.
-     *
-     * All data should be imported.
-     * All imported properties should be exported.
+     * Test get/set Id.
+     */
+    public function testGetSetId()
+    {
+        /** @var Model $model */
+        $model = $this->getMockForAbstractClass(Model::class);
+
+        $model->setId('foo.123');
+        static::assertEquals('foo.123', $model->getId());
+    }
+
+    /**
+     * Test drop cache on import.
      */
     public function testImportExport()
     {
         /** @var Model $model */
         $model = $this->getMockForAbstractClass(Model::class);
 
-        $model->import(['id' => '123', 'foo' => 'bar']);
-        static::assertEquals('123', $model->getId());
-
         $model->setId('foo.123');
-        $data = $model->export();
-        static::assertEquals(['id' => 'foo.123', 'foo' => 'bar'], $data);
+        static::assertEquals('foo.123', $model->getId());
+
+        $model->import(['id' => 'foo.456']);
+        static::assertEquals('foo.456', $model->getId());
     }
 }

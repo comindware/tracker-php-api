@@ -23,7 +23,7 @@ class Attachment extends Model
      */
     public function getName()
     {
-        return $this->getProperty('name');
+        return $this->getValue('name');
     }
 
     /**
@@ -35,7 +35,7 @@ class Attachment extends Model
      */
     public function setName($name)
     {
-        $this->setProperty('name', (string) $name);
+        $this->setValue('name', (string) $name);
     }
 
     /**
@@ -47,7 +47,7 @@ class Attachment extends Model
      */
     public function getUri()
     {
-        return $this->getProperty('uri');
+        return $this->getValue('uri');
     }
 
     /**
@@ -59,7 +59,7 @@ class Attachment extends Model
      */
     public function setUri($uri)
     {
-        $this->setProperty('uri', (string) $uri);
+        $this->setValue('uri', (string) $uri);
     }
 
     /**
@@ -74,8 +74,8 @@ class Attachment extends Model
         return $this->getCachedProperty(
             'date',
             function () {
-                return $this->getProperty('date')
-                    ? new \DateTimeImmutable($this->getProperty('date'))
+                return $this->getValue('date')
+                    ? new \DateTimeImmutable($this->getValue('date'))
                     : null;
             }
         );
@@ -94,7 +94,7 @@ class Attachment extends Model
             $time = $time->format(DATE_RFC3339);
         }
 
-        $this->setProperty('date', (string) $time);
+        $this->setValue('date', (string) $time);
     }
 
     /**
@@ -106,7 +106,7 @@ class Attachment extends Model
      */
     public function getImageWidth()
     {
-        return (int) $this->getProperty('imageWidth');
+        return (int) $this->getValue('imageWidth');
     }
 
     /**
@@ -118,7 +118,7 @@ class Attachment extends Model
      */
     public function setImageWidth($width)
     {
-        $this->setProperty('imageWidth', (int) $width);
+        $this->setValue('imageWidth', (int) $width);
     }
 
     /**
@@ -130,7 +130,7 @@ class Attachment extends Model
      */
     public function getImageHeight()
     {
-        return (int) $this->getProperty('imageHeight');
+        return (int) $this->getValue('imageHeight');
     }
 
     /**
@@ -142,13 +142,13 @@ class Attachment extends Model
      */
     public function setImageHeight($height)
     {
-        $this->setProperty('imageHeight', (int) $height);
+        $this->setValue('imageHeight', (int) $height);
     }
 
     /**
      * Return Attachment author.
      *
-     * @return User|null
+     * @return Account|null
      *
      * @since 0.1
      */
@@ -157,8 +157,8 @@ class Attachment extends Model
         return $this->getCachedProperty(
             'author',
             function () {
-                return $this->getProperty('author')
-                    ? new User($this->getProperty('author'))
+                return $this->getValue('author')
+                    ? new Account($this->getValue('author'))
                     : null;
             }
         );
@@ -167,17 +167,17 @@ class Attachment extends Model
     /**
      * Set Attachment author.
      *
-     * @param User|string $objectOrId User or his ID.
+     * @param Account|string $objectOrId User or his ID.
      *
      * @since 0.1
      */
     public function setAuthor($objectOrId)
     {
         $this->dropCachedProperty('author');
-        if (!$objectOrId instanceof User) {
-            $objectOrId = new User(['id' => $objectOrId]);
+        if (!$objectOrId instanceof Account) {
+            $objectOrId = new Account(['id' => $objectOrId]);
         }
 
-        $this->setProperty('author', $objectOrId->export());
+        $this->setValue('author', $objectOrId->export());
     }
 }

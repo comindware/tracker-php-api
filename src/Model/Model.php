@@ -7,6 +7,8 @@
  */
 namespace Comindware\Tracker\API\Model;
 
+use Comindware\Tracker\API\Struct\AbstractStruct;
+
 use Mekras\ClassHelpers\Traits\GettersCacheTrait;
 
 /**
@@ -14,29 +16,21 @@ use Mekras\ClassHelpers\Traits\GettersCacheTrait;
  *
  * @since 0.1
  */
-abstract class Model
+abstract class Model extends AbstractStruct
 {
     use GettersCacheTrait;
 
     /**
-     * Model properties.
+     * Import data from an array.
      *
-     * @var array
-     */
-    private $properties = [];
-
-    /**
-     * Construct new model.
-     *
-     * @param array|null $data Data that should be imported into model.
+     * @param array $data
      *
      * @since 0.1
      */
-    public function __construct(array $data = null)
+    public function import(array $data)
     {
-        if (null !== $data) {
-            $this->import($data);
-        }
+        parent::import($data);
+        $this->dropCachedProperties();
     }
 
     /**
@@ -48,7 +42,7 @@ abstract class Model
      */
     public function getId()
     {
-        return $this->getProperty('id');
+        return $this->getValue('id');
     }
 
     /**
@@ -60,63 +54,6 @@ abstract class Model
      */
     public function setId($id)
     {
-        $this->setProperty('id', (string) $id);
-    }
-
-    /**
-     * Import data from an array.
-     *
-     * @param array $data
-     *
-     * @since 0.1
-     */
-    public function import(array $data)
-    {
-        $this->properties = $data;
-        $this->dropCachedProperties();
-    }
-
-    /**
-     * Export model data to array.
-     *
-     * @return array
-     *
-     * @since 0.1
-     */
-    public function export()
-    {
-        return $this->properties;
-    }
-
-    /**
-     * Return model property.
-     *
-     * @param string $property Property name.
-     * @param mixed  $default  Default property value.
-     *
-     * @return mixed
-     *
-     * @since 0.1
-     */
-    protected function getProperty($property, $default = null)
-    {
-        if (array_key_exists($property, $this->properties)) {
-            return $this->properties[$property];
-        }
-
-        return $default;
-    }
-
-    /**
-     * Set model property value.
-     *
-     * @param string $property Property name.
-     * @param mixed  $value    Property value.
-     *
-     * @since 0.1
-     */
-    protected function setProperty($property, $value)
-    {
-        $this->properties[$property] = $value;
+        $this->setValue('id', (string) $id);
     }
 }

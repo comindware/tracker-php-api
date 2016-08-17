@@ -25,7 +25,7 @@ class Workspace extends Model
      */
     public function getName()
     {
-        return $this->getProperty('name');
+        return $this->getValue('name');
     }
 
     /**
@@ -37,7 +37,7 @@ class Workspace extends Model
      */
     public function setName($name)
     {
-        $this->setProperty('name', (string) $name);
+        $this->setValue('name', (string) $name);
     }
 
     /**
@@ -49,7 +49,7 @@ class Workspace extends Model
      */
     public function getDescription()
     {
-        return $this->getProperty('description');
+        return $this->getValue('description');
     }
 
     /**
@@ -61,7 +61,7 @@ class Workspace extends Model
      */
     public function setDescription($description)
     {
-        $this->setProperty('description', (string) $description);
+        $this->setValue('description', (string) $description);
     }
 
     /**
@@ -73,7 +73,7 @@ class Workspace extends Model
      */
     public function getContainerId()
     {
-        return $this->getProperty('containerId');
+        return $this->getValue('containerId');
     }
 
     /**
@@ -89,6 +89,6 @@ class Workspace extends Model
             $objectOrId = $objectOrId->getId();
         }
 
-        $this->setProperty('containerId', (string) $objectOrId);
+        $this->setValue('containerId', (string) $objectOrId);
     }
 }

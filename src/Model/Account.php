@@ -15,15 +15,34 @@ namespace Comindware\Tracker\API\Model;
 class Account extends Model
 {
     /**
+     * Construct new model.
+     *
+     * @param array|null $data Data that should be imported into model.
+     *
+     * @since 0.1
+     */
+    public function __construct(array $data = null)
+    {
+        /*
+         * Workaround for API inconsistency in method «GET /Api/Account/{id}»
+         */
+        if (array_key_exists('name', $data)) {
+            $data['fullName'] = $data['name'];
+            unset($data['name']);
+        }
+        parent::__construct($data);
+    }
+
+    /**
      * Return name.
      *
      * @return string|null
      *
      * @since 0.1
      */
-    public function getName()
+    public function getFullName()
     {
-        return $this->getProperty('name');
+        return $this->getValue('fullName');
     }
 
     /**
@@ -33,8 +52,8 @@ class Account extends Model
      *
      * @since 0.1
      */
-    public function setName($name)
+    public function setFullName($name)
     {
-        $this->setProperty('name', (string) $name);
+        $this->setValue('fullName', (string) $name);
     }
 }

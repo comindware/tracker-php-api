@@ -33,17 +33,34 @@ class AccountService extends Service
     }
 
     /**
-     * TODO Describe.
+     * Get all accounts.
+     *
+     * @return Account[]
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @since 0.1
      */
-    public function getAccounts()
+    public function getAll()
     {
-        // FIXME
-        return $this->client->sendRequest($this->getBase());
+        $response = $this->client->sendRequest($this->getBase());
+        $result = [];
+        if (!is_array($response)) {
+            throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
+        }
+        if (!array_key_exists('rows', $response)) {
+            throw new UnexpectedValueException('Array key "rows" not found');
+        }
+        foreach ($response['rows'] as $number => $item) {
+            if (!array_key_exists('data', $item)) {
+                throw new UnexpectedValueException('Array key "data" not found in item ' . $number);
+            }
+            $result[] = new Account($item['data']);
+        }
+
+        return $result;
     }
 
     /**

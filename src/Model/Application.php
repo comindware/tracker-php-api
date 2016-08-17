@@ -32,7 +32,7 @@ class Application extends Model
      */
     public function getName()
     {
-        return $this->getProperty('name');
+        return $this->getValue('name');
     }
 
     /**
@@ -44,7 +44,7 @@ class Application extends Model
      */
     public function setName($name)
     {
-        $this->setProperty('name', (string) $name);
+        $this->setValue('name', (string) $name);
     }
 
     /**
@@ -56,7 +56,7 @@ class Application extends Model
      */
     public function getDescription()
     {
-        return $this->getProperty('description');
+        return $this->getValue('description');
     }
 
     /**
@@ -68,7 +68,7 @@ class Application extends Model
      */
     public function setDescription($description)
     {
-        $this->setProperty('description', (string) $description);
+        $this->setValue('description', (string) $description);
     }
 
     /**
@@ -80,7 +80,7 @@ class Application extends Model
      */
     public function getType()
     {
-        return $this->getProperty('kind');
+        return $this->getValue('kind');
     }
 
     /**
@@ -92,6 +92,6 @@ class Application extends Model
      */
     public function setType($kind)
     {
-        $this->setProperty('kind', (string) $kind);
+        $this->setValue('kind', (string) $kind);
     }
 }

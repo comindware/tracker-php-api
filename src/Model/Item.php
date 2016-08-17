@@ -43,7 +43,7 @@ class Item extends Model
      */
     public function getApplicationId()
     {
-        return $this->getProperty('application');
+        return $this->getValue('application');
     }
 
     /**
@@ -59,7 +59,7 @@ class Item extends Model
             $objectOrId = $objectOrId->getId();
         }
 
-        $this->setProperty('application', (string) $objectOrId);
+        $this->setValue('application', (string) $objectOrId);
     }
 
     /**
@@ -71,7 +71,7 @@ class Item extends Model
      */
     public function getPrototypeId()
     {
-        return $this->getProperty('prototypeId');
+        return $this->getValue('prototypeId');
     }
 
     /**
@@ -87,7 +87,7 @@ class Item extends Model
             $objectOrId = $objectOrId->getId();
         }
 
-        $this->setProperty('prototypeId', (string) $objectOrId);
+        $this->setValue('prototypeId', (string) $objectOrId);
     }
 
     /**
@@ -99,7 +99,7 @@ class Item extends Model
      */
     public function getType()
     {
-        return $this->getProperty('type');
+        return $this->getValue('type');
     }
 
     /**
@@ -111,13 +111,13 @@ class Item extends Model
      */
     public function setType($type)
     {
-        $this->setProperty('type', (string) $type);
+        $this->setValue('type', (string) $type);
     }
 
     /**
      * Return Item creator.
      *
-     * @return User|null
+     * @return Account|null
      *
      * @since 0.1
      */
@@ -126,8 +126,8 @@ class Item extends Model
         return $this->getCachedProperty(
             'creator',
             function () {
-                return $this->getProperty('creator')
-                    ? new User($this->getProperty('creator'))
+                return $this->getValue('creator')
+                    ? new Account($this->getValue('creator'))
                     : null;
             }
         );
@@ -136,18 +136,18 @@ class Item extends Model
     /**
      * Set Item creator.
      *
-     * @param User|string $objectOrId User or his ID.
+     * @param Account|string $objectOrId User or his ID.
      *
      * @since 0.1
      */
     public function setCreator($objectOrId)
     {
         $this->dropCachedProperty('creator');
-        if (!$objectOrId instanceof User) {
-            $objectOrId = new User(['id' => $objectOrId]);
+        if (!$objectOrId instanceof Account) {
+            $objectOrId = new Account(['id' => $objectOrId]);
         }
 
-        $this->setProperty('creator', $objectOrId->export());
+        $this->setValue('creator', $objectOrId->export());
     }
 
     /**
@@ -162,8 +162,8 @@ class Item extends Model
         return $this->getCachedProperty(
             'creationDate',
             function () {
-                return $this->getProperty('creationDate')
-                    ? new \DateTimeImmutable($this->getProperty('creationDate'))
+                return $this->getValue('creationDate')
+                    ? new \DateTimeImmutable($this->getValue('creationDate'))
                     : null;
             }
         );
@@ -182,7 +182,7 @@ class Item extends Model
             $time = $time->format(DATE_RFC3339);
         }
 
-        $this->setProperty('creationDate', (string) $time);
+        $this->setValue('creationDate', (string) $time);
     }
 
     /**
@@ -194,7 +194,7 @@ class Item extends Model
      */
     public function getProperties()
     {
-        $names = array_keys($this->getProperty('properties'));
+        $names = array_keys($this->getValue('properties'));
         $result = [];
         foreach ($names as $name) {
             $result[$name] = $this->get($name);
@@ -215,7 +215,7 @@ class Item extends Model
      */
     public function get($property, $default = null)
     {
-        $properties = $this->getProperty('properties', []);
+        $properties = $this->getValue('properties', []);
         if (array_key_exists($property, $properties)) {
             $value = $properties[$property];
             if (is_array($value)) {
@@ -238,8 +238,8 @@ class Item extends Model
      */
     public function set($property, $value)
     {
-        $properties = $this->getProperty('properties', []);
+        $properties = $this->getValue('properties', []);
         $properties[$property] = [$value];
-        $this->setProperty('properties', $properties);
+        $this->setValue('properties', $properties);
     }
 }
