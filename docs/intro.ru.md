@@ -14,14 +14,33 @@
  
 ```php
 use Comindware\Tracker\API\Client;
-use Http\Discovery\HttpClientDiscovery;
-use Http\Discovery\MessageFactoryDiscovery;
 
 $client = new Client(
     $baseUri, // Адрес вашего Comindware Tracker, например «http://tracker.example.com».
-    $token, // Авторизационная метка. Создаётся в административном интерфейсе Comindware Tracker. 
+    $token, // Авторизационная метка. Создаётся в административном интерфейсе Comindware Tracker.
+    $httpClient, // Http\Client\HttpClient
+    $httpMessageFactory, // Http\Message\MessageFactory
+    $httpStreamFactory // Http\Message\StreamFactory
+);
+```
+
+Обратите внимание на последние три аргумента, передаваемые в конструктор. Вы можете создать эти
+объекты самостоятельно (подробнее см. на сайте [PHP-HTTP](http://php-http.org/)), либо
+воспользоваться пакетом [Discovery](http://php-http.org/en/latest/discovery.html). В последнем
+случае код будет выглядеть так:
+
+```php
+use Comindware\Tracker\API\Client;
+use Http\Discovery\HttpClientDiscovery;
+use Http\Discovery\MessageFactoryDiscovery;
+use Http\Discovery\StreamFactoryDiscovery;
+
+$client = new Client(
+    $baseUri, // Адрес вашего Comindware Tracker, например «http://tracker.example.com».
+    $token, // Авторизационная метка. Создаётся в административном интерфейсе Comindware Tracker.
     HttpClientDiscovery::find(),
-    MessageFactoryDiscovery::find()
+    MessageFactoryDiscovery::find(),
+    StreamFactoryDiscovery::find()
 );
 ```
 
@@ -35,6 +54,8 @@ use Comindware\Tracker\API\Api;
 // ...
 $tracker = new Api($client);
 ```
+
+Список возможностей этого интерфейса см. в [оглавлении](index.ru.md).
 
 См. также:
 

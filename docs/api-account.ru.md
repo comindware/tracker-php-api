@@ -4,7 +4,9 @@
 
 ## Получение аватар
 
-**Метод API**: `POST /Api/Account/Avatar`
+Метод API: `POST /Api/Account/Avatar`
+
+Возвращает аватары указанных учётных записей.
 
 ```php
 public function AccountService::getAvatars(array $accounts): FileStruct[]
@@ -12,16 +14,16 @@ public function AccountService::getAvatars(array $accounts): FileStruct[]
 ### Список параметров
 
 - **$accounts** — Массив учётных записей, чьи аватары надо получить. Элементами массива могут быть
-  идентификаторы или экземпляры [Account](models.ru.md#Account) (можно смешивать в одном запросе оба
+  идентификаторы или экземпляры [Account](models.ru.md#account) (можно смешивать в одном запросе оба
   типа).
 
 ### Возвращаемые значения
 
-Массив [FileStruct](types.ru.md#FileStruct).
+Массив [FileStruct](types.ru.md#filestruct).
 
 ### Ошибки
 
-Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendRequest).
+Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendrequest).
 
 `Comindware\Tracker\API\Exception\UnexpectedValueException` если сервер вернул неожиданное значение.
 
@@ -35,18 +37,18 @@ $files = $api->accounts()->getAvatars(['account.123', 'account.456']);
 
 ## Получение всех учётных записей
 
-**Метод API**: `GET /Api/Account`
+Метод API: `GET /Api/Account`
 
 ```php
 public function AccountService::getAll(): Account[]
 ```
 ### Возвращаемые значения
 
-Массив [Account](models.ru.md#Account).
+Массив [Account](models.ru.md#account).
 
 ### Ошибки
 
-Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendRequest).
+Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendrequest).
 
 `Comindware\Tracker\API\Exception\UnexpectedValueException` если сервер вернул неожиданное значение.
 
@@ -60,7 +62,7 @@ $accounts = $api->accounts()->getAll();
 
 ## Получение учётной записи
 
-**Метод API**: `GET /Api/Account/{id}`
+Метод API: `GET /Api/Account/{id}`
 
 ```php
 public function AccountService::get(string $id): Account
@@ -71,11 +73,11 @@ public function AccountService::get(string $id): Account
 
 ### Возвращаемые значения
 
-[Account](models.ru.md#Account).
+[Account](models.ru.md#account).
 
 ### Ошибки
 
-Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendRequest).
+Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendrequest).
 
 `Comindware\Tracker\API\Exception\UnexpectedValueException` если сервер вернул неожиданное значение.
 
