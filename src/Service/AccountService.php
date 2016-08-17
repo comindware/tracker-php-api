@@ -9,6 +9,7 @@ namespace Comindware\Tracker\API\Service;
 
 use Comindware\Tracker\API\Exception\UnexpectedValueException;
 use Comindware\Tracker\API\Model\Account;
+use Comindware\Tracker\API\Struct\DataSetStruct;
 
 /**
  * Account service.
@@ -40,24 +41,19 @@ class AccountService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \InvalidArgumentException If response missing any of the required keys.
      *
      * @since 0.1
      */
     public function getAll()
     {
         $response = $this->client->sendRequest($this->getBase());
+        $dataSet = new DataSetStruct($response);
+
         $result = [];
-        if (!is_array($response)) {
-            throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
-        }
-        if (!array_key_exists('rows', $response)) {
-            throw new UnexpectedValueException('Array key "rows" not found');
-        }
-        foreach ($response['rows'] as $number => $item) {
-            if (!array_key_exists('data', $item)) {
-                throw new UnexpectedValueException('Array key "data" not found in item ' . $number);
-            }
-            $result[] = new Account($item['data']);
+        $items = $dataSet->exportItems();
+        foreach ($items as $item) {
+            $result[] = new Account($item);
         }
 
         return $result;
