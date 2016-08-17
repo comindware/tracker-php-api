@@ -17,26 +17,6 @@ namespace Comindware\Tracker\API\Struct;
 class DataSetStruct extends AbstractStruct
 {
     /**
-     * Construct new structure.
-     *
-     * @param array|null $data Data that should be imported.
-     *
-     * @throws \InvalidArgumentException If missing any of the required keys.
-     *
-     * @since 0.1
-     */
-    public function __construct($data)
-    {
-        if (!array_key_exists('columns', $data)) {
-            throw new \InvalidArgumentException('Missing "columns" key');
-        }
-        if (!array_key_exists('rows', $data)) {
-            throw new \InvalidArgumentException('Missing "rows" key');
-        }
-        parent::__construct($data);
-    }
-
-    /**
      * Return dataset columns.
      *
      * Items are arrays with the following structure:
@@ -94,5 +74,28 @@ class DataSetStruct extends AbstractStruct
         }
 
         return $items;
+    }
+
+    /**
+     * Return structure definition.
+     *
+     * @return array
+     *
+     * @since 0.1
+     */
+    protected function getStructureDefinition()
+    {
+        return [
+            'columns' => [
+                [
+                    'datasourceId' => null
+                ]
+            ],
+            'rows' => [
+                [
+                    'data' => null
+                ]
+            ]
+        ];
     }
 }

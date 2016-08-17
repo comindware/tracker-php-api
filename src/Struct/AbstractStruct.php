@@ -40,10 +40,13 @@ abstract class AbstractStruct
      *
      * @param array $data
      *
+     * @throws \InvalidArgumentException If missing any of the required keys.
+     *
      * @since 0.1
      */
     public function import(array $data)
     {
+        $this->validate($data, $this->getStructureDefinition());
         $this->data = $data;
     }
 
@@ -57,6 +60,21 @@ abstract class AbstractStruct
     public function export()
     {
         return $this->data;
+    }
+
+    /**
+     * Return structure definition.
+     *
+     * Should return associative array. Keys are treated as a required structure fields. Values can
+     * be null (no special meaning) or arrays with the next level constraints.
+     *
+     * @return array
+     *
+     * @since 0.1
+     */
+    protected function getStructureDefinition()
+    {
+        return [];
     }
 
     /**
@@ -89,5 +107,37 @@ abstract class AbstractStruct
     protected function setValue($name, $value)
     {
         $this->data[$name] = $value;
+    }
+
+    /**
+     * Validate data according to {@see getStructureDefinition()}.
+     *
+     * @param array  $data        Data to be validated.
+     * @param array  $constraints Constraints.
+     * @param string $parentPath  Parent property path.
+     *
+     * @throws \InvalidArgumentException On any errors.
+     */
+    private function validate(array $data, array $constraints, $parentPath = '')
+    {
+        if (is_numeric(key($constraints))) {
+            $subConstrains = reset($constraints);
+            $length = count($data);
+            /** @noinspection ForeachInvariantsInspection */
+            for ($i = 0; $i < $length; $i++) {
+                $this->validate($data[$i], $subConstrains, $parentPath . '[' . $i . ']');
+            }
+        } else {
+            foreach ($constraints as $key => $subConstrains) {
+                if (!array_key_exists($key, $data)) {
+                    throw new \InvalidArgumentException(
+                        sprintf('Missing key %s[%s]', $parentPath, $key)
+                    );
+                }
+                if ($subConstrains) {
+                    $this->validate($data[$key], $subConstrains, $parentPath . '[' . $key . ']');
+                }
+            }
+        }
     }
 }
