@@ -5,9 +5,11 @@
 
 ## sendRequest
 
-Для отправки запросов используется метод `sendRequest`:
+Вызывает методы API.
 
-    public function sendRequest(string $path [, string $method [, array $payload ]]): mixed
+```php
+public function sendRequest(string $path [, string $method [, array $payload ]]): mixed
+```
 
 ### Список параметров
 

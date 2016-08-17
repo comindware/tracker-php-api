@@ -26,6 +26,8 @@ abstract class AbstractStruct
      *
      * @param array|null $data Data that should be imported.
      *
+     * @throws \InvalidArgumentException If missing any of the required keys.
+     *
      * @since 0.1
      */
     public function __construct(array $data = null)
