@@ -27,10 +27,10 @@ $item = new Item();
 $item->set('title', 'Foo');
 $item->set('description', '<h1>Foo</h1> <p>Bar baz.</p>');
 
-$appId = 'tracker.157'; // Set to your own.
+$appId = 'tracker.4'; // Set to your own.
 
-$id = $tracker->item()->create($appId, $item);
-$item = $tracker->item()->getItem($id);
+$id = $tracker->items()->create($appId, $item);
+$item = $tracker->items()->get($id);
 $tracker->attachments()->create($item->getId(), new LocalFile(__FILE__, 'foo.txt'));
 
 printf(
