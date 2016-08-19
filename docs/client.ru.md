@@ -21,7 +21,8 @@ public function sendRequest(string $path [, string $method [, array $payload ]])
 
 ### Возвращаемые значения
 
-Строка или массив в зависимости от вызываемого метода API.
+В зависимости от вызываемого метода API и ответа сервера метод может возвращать строку, массив
+или экземпляр `Psr\Http\Message\StreamInterface`.
 
 ### Ошибки
 

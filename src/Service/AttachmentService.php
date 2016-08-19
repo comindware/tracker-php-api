@@ -8,17 +8,33 @@
 namespace Comindware\Tracker\API\Service;
 
 use Comindware\Tracker\API\Util\File\File;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Attachment service.
- *
- * TODO Дописать методы.
  *
  * @api
  * @since 0.1
  */
 class AttachmentService extends Service
 {
+    /**
+     * Get attached file content.
+     *
+     * @param string $revisionId {@see \Comindware\Tracker\API\Model\Attachment} revision ID.
+     *
+     * @return StreamInterface File content stream.
+     *
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     *
+     * @since 0.1
+     */
+    public function getContent($revisionId)
+    {
+        return $this->client->sendRequest($this->getBase() . '/Content/' . $revisionId);
+    }
+
     /**
      * Create {@see \Comindware\Tracker\API\Model\Attachment}.
      *

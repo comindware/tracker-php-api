@@ -24,7 +24,7 @@ public function AppService::getAll(): Application[]
 
 ```php
 // $api — instance of Comindware\Tracker\API\Api
-$applications = $api->applications()->getAll();
+$applications = $api->apps()->getAll();
 ```
 
 
@@ -33,7 +33,7 @@ $applications = $api->applications()->getAll();
 Метод API: `GET /Api/Application/{id}`
 
 ```php
-public function ApplicationService::get(string $id): Application
+public function AppService::get(string $id): Application
 ```
 ### Список параметров
 
@@ -53,5 +53,5 @@ public function ApplicationService::get(string $id): Application
 
 ```php
 // $api — instance of Comindware\Tracker\API\Api
-$application = $api->applications()->get('ws.123');
+$application = $api->apps()->get('tracker.123');
 ```

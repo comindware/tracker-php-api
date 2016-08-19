@@ -34,7 +34,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $messageFactory->createResponse(
                 200,
                 'OK',
-                [],
+                ['Content-type' => 'application/json; charset=utf-8'],
                 '{"success":true,"response":{"foo":"bar"}}'
             )
         );
@@ -78,7 +78,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $messageFactory->createResponse(
                 200,
                 'OK',
-                [],
+                ['Content-type' => 'application/json; charset=utf-8'],
                 '{"success":true,"response":{"foo":"bar"}}'
             )
         );
@@ -121,7 +121,12 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $streamFactory = StreamFactoryDiscovery::find();
 
         $httpClient->addResponse(
-            $messageFactory->createResponse(200, 'OK', [], '{"success":true,"response":"foo"}')
+            $messageFactory->createResponse(
+                200,
+                'OK',
+                ['Content-type' => 'application/json; charset=utf-8'],
+                '{"success":true,"response":"foo"}'
+            )
         );
 
         $client = new Client(
@@ -201,7 +206,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $messageFactory = MessageFactoryDiscovery::find();
         $streamFactory = StreamFactoryDiscovery::find();
 
-        $httpClient->addResponse($messageFactory->createResponse(200, 'OK', [], 'Boo'));
+        $httpClient->addResponse(
+            $messageFactory->createResponse(
+                200,
+                'OK',
+                ['Content-type' => 'application/json; charset=utf-8'],
+                'Boo'
+            )
+        );
         $client = new Client(
             'http://example.com',
             'my.token',
@@ -224,7 +236,14 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         $messageFactory = MessageFactoryDiscovery::find();
         $streamFactory = StreamFactoryDiscovery::find();
 
-        $httpClient->addResponse($messageFactory->createResponse(200, 'OK', [], '{"foo":"bar"}'));
+        $httpClient->addResponse(
+            $messageFactory->createResponse(
+                200,
+                'OK',
+                ['Content-type' => 'application/json; charset=utf-8'],
+                '{"foo":"bar"}'
+            )
+        );
         $client = new Client(
             'http://example.com',
             'my.token',
@@ -251,7 +270,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
             $messageFactory->createResponse(
                 200,
                 'OK',
-                [],
+                ['Content-type' => 'application/json; charset=utf-8'],
                 '{"success":false,"error":{"type":"WebApiClientException","message":"Foo bar"}}'
             )
         );

@@ -15,6 +15,7 @@ use Http\Message\MessageFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Http\Message\StreamFactory;
 use Psr\Http\Message\RequestInterface;
+use Psr\Http\Message\StreamInterface;
 use Psr\Log\LoggerInterface;
 use Psr\Log\NullLogger;
 
@@ -112,7 +113,7 @@ class Client
      * @param string     $method  HTTP method (e. g. "POST")
      * @param array|null $payload Optional request payload. See method description for details.
      *
-     * @return array|string
+     * @return array|string|StreamInterface
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
@@ -145,7 +146,18 @@ class Client
             );
         }
 
-        return $this->parseResponse((string) $response->getBody());
+        $type = explode(';', $response->getHeaderLine('Content-type'));
+        $type = reset($type);
+        switch ($type) {
+            case 'application/json':
+                return $this->parseJson((string) $response->getBody());
+            // break not needed
+            case 'application/octet-stream':
+                return $response->getBody();
+            // break not needed
+        }
+
+        throw new RuntimeException('Unexpected response content type:' . $type);
     }
 
     /**
@@ -217,18 +229,18 @@ class Client
     }
 
     /**
-     * Parse response.
+     * Parse JSON response.
      *
-     * @param string $response HTTP response body.
+     * @param string $json Server JSON response.
      *
      * @return array|string
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      */
-    private function parseResponse($response)
+    private function parseJson($json)
     {
-        $data = @json_decode($response, true);
+        $data = @json_decode($json, true);
         if (null === $data) {
             throw new RuntimeException('JSON parsing failed: ' . json_last_error_msg());
         }
@@ -239,7 +251,7 @@ class Client
         ) {
             // Default exception.
             $excClass = RuntimeException::class;
-            $excMessage = 'Invalid server response: ' . $response;
+            $excMessage = 'Invalid server response: ' . $json;
             if (array_key_exists('error', $data)) {
                 $excClass = WebApiClientException::class;
                 if (array_key_exists('type', $data['error'])) {
