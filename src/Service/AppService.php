@@ -27,9 +27,10 @@ class AppService extends Service
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
+     * @since x.x renamed from "getApplications" to "getAll".
      * @since 0.1
      */
-    public function getApplications()
+    public function getAll()
     {
         $response = $this->client->sendRequest($this->getBase());
         $result = [];
@@ -38,7 +39,11 @@ class AppService extends Service
         }
         /** @var array $response */
         foreach ($response as $item) {
-            $result[] = new Application($item);
+            try {
+                $result[] = new Application($item);
+            } catch (\InvalidArgumentException $e) {
+                throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+            }
         }
 
         return $result;
@@ -55,16 +60,21 @@ class AppService extends Service
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
+     * @since x.x renamed from "getApplication" to "get".
      * @since 0.1
      */
-    public function getApplication($id)
+    public function get($id)
     {
         $response = $this->client->sendRequest($this->getBase() . '/' . $id);
         if (!is_array($response)) {
             throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
         }
 
-        return new Application($response);
+        try {
+            return new Application($response);
+        } catch (\InvalidArgumentException $e) {
+            throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+        }
     }
 
     /**

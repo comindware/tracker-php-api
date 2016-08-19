@@ -18,8 +18,6 @@ namespace Comindware\Tracker\API\Model;
  * - documents app which creates and stores documents of the same type.
  *
  * @since 0.1
- *
- * TODO Добавить свойство workspaces
  */
 class Application extends Model
 {
@@ -93,5 +91,40 @@ class Application extends Model
     public function setType($kind)
     {
         $this->setValue('kind', (string) $kind);
+    }
+
+    /**
+     * Return Workspaces that contain this application.
+     *
+     * @return Workspace[]
+     * @throws \UnexpectedValueException
+     *
+     * @since x.x
+     */
+    public function getWorkspaces()
+    {
+        return $this->getCachedProperty(
+            'workspaces',
+            function () {
+                $result = [];
+                $items = $this->getValue('workspaces');
+                if (is_array($items)) {
+                    /** @var array $items */
+                    foreach ($items as $item) {
+                        try {
+                            $result[] = new Workspace($item);
+                        } catch (\InvalidArgumentException $e) {
+                            throw new \UnexpectedValueException(
+                                $e->getMessage(),
+                                $e->getCode(),
+                                $e
+                            );
+                        }
+                    }
+                }
+
+                return $result;
+            }
+        );
     }
 }

@@ -4,7 +4,7 @@
 2. [Введение](intro.ru.md)
 3. Методы API
    - [Учётные записи (Accounts)](api-accounts.ru.md)
-   - [Приложения (Applications)]
+   - [Приложения (Applications)](api-apps.ru.md)
    - [Вложения (Attachments)](api-attachments.ru.md)
    - [Аутентификация (Authentication)]
    - [Комментарии (Comments)]
