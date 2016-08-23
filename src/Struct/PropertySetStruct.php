@@ -10,7 +10,7 @@ namespace Comindware\Tracker\API\Struct;
 /**
  * PropertySet structure.
  *
- * @since x.x
+ * @since 0.2
  */
 class PropertySetStruct extends AbstractStruct
 {
@@ -35,7 +35,7 @@ class PropertySetStruct extends AbstractStruct
      *
      * @return array
      *
-     * @since x.x
+     * @since 0.2
      */
     public function getProperties()
     {
@@ -47,7 +47,7 @@ class PropertySetStruct extends AbstractStruct
      *
      * @return array
      *
-     * @since x.x
+     * @since 0.2
      */
     public function getItems()
     {
@@ -59,7 +59,7 @@ class PropertySetStruct extends AbstractStruct
      *
      * @return array
      *
-     * @since x.x
+     * @since 0.2
      */
     public function exportItems()
     {
@@ -82,7 +82,7 @@ class PropertySetStruct extends AbstractStruct
      *
      * @return array
      *
-     * @since x.x
+     * @since 0.2
      */
     protected function getStructureDefinition()
     {
