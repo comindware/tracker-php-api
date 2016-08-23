@@ -1,5 +1,41 @@
 # Элементы (Items)
 
+## Выборка элементов, удовлетворяющих выражению
+
+Метод API: `POST /Api/Item/Query`
+
+```php
+public function ItemService::query(string $expression, array $orderBy,
+                    array $properties [ , int $limit [ , int $offset ]] ): Item[]
+```
+
+### Список параметров
+
+- **$expression** — Выражение на [Comindware Expression
+  Language](http://kb.comindware.com/comindware-tracker/1.0/comindware-expression-language-how-to/).
+- **$orderBy** — Параметры сортировки в виде массива ['поле' => 'направление'], где «поле» — имя
+  поля, а «направление» — «Ascending» или «Descending». На данный момент сортировка возможна только
+  по одному полю.
+- **$properties** — Список свойств элемента, которые надо вернуть. Обратите внимание, что если вам
+  нужны системные (встроенные) свойства [Item](models.ru.md#item), то их тоже надо указывать в этом
+  аргументе.
+- **$limit** — Наибольшее количество элементов, которые надо вернуть (по умолчанию 100).
+- **$offset** — Сколько элементов пропустить от начала.
+
+### Возвращаемые значения
+
+Массив [Item](models.ru.md#item). Обратите внимание, что в моделях будут заполнены только те
+свойства, которые были указаны в аргументе `$properties`.
+
+### Ошибки
+
+Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendrequest).
+
+### Пример
+
+- [examples/query-items.php](examples/query-items.php)
+
+
 ## Получение элемента
 
 Метод API: `GET /Api/Item/{id}`
