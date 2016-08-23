@@ -5,6 +5,12 @@
 ### Added
 
 - #14: Class `Expression`
+- Method `Api::setLogger()`.
+- Argument `$logger` to `Service\Service::__construct()` .
+
+### Changed
+
+- Improved logging.
 
 
 ## 0.2 - 2016-08-23

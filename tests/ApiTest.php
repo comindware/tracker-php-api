@@ -9,7 +9,9 @@ namespace Comindware\Tracker\API\Tests;
 
 use Comindware\Tracker\API\Api;
 use Comindware\Tracker\API\Client;
+use Comindware\Tracker\API\Service\AccountService;
 use Comindware\Tracker\API\Service\AttachmentService;
+use Comindware\Tracker\API\Service\AuthenticationService;
 
 /**
  * Tests for Comindware\Tracker\API\Api
@@ -31,7 +33,19 @@ class ApiTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * Api::attachment() should return an instance of AttachmentService.
+     * Api::accounts() should return an instance of AccountService.
+     */
+    public function testAccounts()
+    {
+        /** @var Client $client */
+        $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
+        $api = new Api($client);
+
+        static::assertInstanceOf(AccountService::class, $api->accounts());
+    }
+
+    /**
+     * Api::attachments() should return an instance of AttachmentService.
      */
     public function testAttachment()
     {
@@ -40,5 +54,18 @@ class ApiTest extends \PHPUnit_Framework_TestCase
         $api = new Api($client);
 
         static::assertInstanceOf(AttachmentService::class, $api->attachments());
+    }
+
+
+    /**
+     * Api::authentication() should return an instance of AuthenticationService.
+     */
+    public function testAuthentication()
+    {
+        /** @var Client $client */
+        $client = $this->getMockBuilder(Client::class)->disableOriginalConstructor()->getMock();
+        $api = new Api($client);
+
+        static::assertInstanceOf(AuthenticationService::class, $api->authentication());
     }
 }

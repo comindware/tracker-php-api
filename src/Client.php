@@ -14,10 +14,9 @@ use Http\Client\HttpClient;
 use Http\Message\MessageFactory;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Http\Message\StreamFactory;
+use Mekras\ClassHelpers\Traits\LoggingHelperTrait;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamInterface;
-use Psr\Log\LoggerInterface;
-use Psr\Log\NullLogger;
 
 /**
  * Tracker API client.
@@ -29,6 +28,8 @@ use Psr\Log\NullLogger;
  */
 class Client
 {
+    use LoggingHelperTrait;
+
     /**
      * Comindware Tracker API root URI.
      *
@@ -70,13 +71,6 @@ class Client
      * @var MultipartStreamBuilder
      */
     private $multipartStreamBuilder = null;
-
-    /**
-     * Logger.
-     *
-     * @var LoggerInterface
-     */
-    private $logger = null;
 
     /**
      * Create new Tracker API client.
@@ -132,6 +126,12 @@ class Client
 
         if ($payload) {
             $request = $this->buildRequestBody($request, $payload);
+            $this->getLogger()->debug(
+                sprintf(
+                    'Sending payload with "%s" content type',
+                    $request->getHeaderLine('Content-type')
+                )
+            );
         }
 
         try {
@@ -141,35 +141,30 @@ class Client
         }
 
         if ($response->getStatusCode() !== 200) {
-            throw new RuntimeException(
-                sprintf('HTTP %d: %s', $response->getStatusCode(), $response->getReasonPhrase())
+            $message = sprintf(
+                'HTTP %d: %s',
+                $response->getStatusCode(),
+                $response->getReasonPhrase()
             );
+            $this->getLogger()->error($message);
+            throw new RuntimeException($message);
         }
 
         $type = explode(';', $response->getHeaderLine('Content-type'));
         $type = reset($type);
         switch ($type) {
             case 'application/json':
+                $this->getLogger()->debug('Response body is a JSON');
                 return $this->parseJson((string) $response->getBody());
             // break not needed
             case 'application/octet-stream':
+                $this->getLogger()->debug('Response body is a stream');
+
                 return $response->getBody();
             // break not needed
         }
 
         throw new RuntimeException('Unexpected response content type:' . $type);
-    }
-
-    /**
-     * Set logger.
-     *
-     * @param LoggerInterface $logger
-     *
-     * @since 0.1
-     */
-    public function setLogger(LoggerInterface $logger)
-    {
-        $this->logger = $logger;
     }
 
     /**
@@ -264,6 +259,7 @@ class Client
                     $excMessage = $data['error']['message'];
                 }
             }
+            $this->getLogger()->error($excMessage);
             throw new $excClass($excMessage);
         }
 
@@ -282,19 +278,5 @@ class Client
         }
 
         return $this->multipartStreamBuilder;
-    }
-
-    /**
-     * Return logger.
-     *
-     * @return LoggerInterface
-     */
-    private function getLogger()
-    {
-        if (null === $this->logger) {
-            $this->logger = new NullLogger();
-        }
-
-        return $this->logger;
     }
 }

@@ -53,6 +53,8 @@ class ItemService extends Service
             'properties' => $properties
         ];
 
+        $this->getLogger()->debug('[ItemService::query] ' . json_encode($params));
+
         $url = $this->getBase() . 's/Query?rangeSelector.skip=' . $offset;
         if ($limit) {
             $url .= '&rangeSelector.take=' . $limit;

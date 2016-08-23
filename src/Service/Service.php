@@ -8,6 +8,8 @@
 namespace Comindware\Tracker\API\Service;
 
 use Comindware\Tracker\API\Client;
+use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * Abstract API service (group of methods).
@@ -20,19 +22,30 @@ abstract class Service
      * Tracker client.
      *
      * @var Client
+     * @since 0.1
      */
     protected $client;
 
     /**
+     * Logger.
+     *
+     * @var LoggerInterface
+     */
+    private $logger;
+
+    /**
      * Create new API service.
      *
-     * @param Client $client Tracker API client.
+     * @param Client          $client Tracker API client.
+     * @param LoggerInterface $logger Logger.
      *
+     * @since x.x Added $logger argument.
      * @since 0.1
      */
-    public function __construct(Client $client)
+    public function __construct(Client $client, LoggerInterface $logger)
     {
         $this->client = $client;
+        $this->logger = $logger;
     }
 
     /**
@@ -43,4 +56,16 @@ abstract class Service
      * @since 0.1
      */
     abstract protected function getBase();
+
+    /**
+     * Return logger.
+     *
+     * @return LoggerInterface
+     *
+     * @since x.x
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
 }

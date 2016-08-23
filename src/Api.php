@@ -21,6 +21,7 @@ use Comindware\Tracker\API\Service\Service;
 use Comindware\Tracker\API\Service\TimespentService;
 use Comindware\Tracker\API\Service\WorkflowService;
 use Comindware\Tracker\API\Service\WorkspaceService;
+use Mekras\ClassHelpers\Traits\LoggingHelperTrait;
 
 /**
  * Tracker high-level interface.
@@ -30,6 +31,8 @@ use Comindware\Tracker\API\Service\WorkspaceService;
  */
 class Api
 {
+    use LoggingHelperTrait;
+
     /**
      * Tracker client.
      *
@@ -234,7 +237,7 @@ class Api
     private function getService($class)
     {
         if (!array_key_exists($class, $this->services)) {
-            $this->services[$class] = new $class($this->getClient());
+            $this->services[$class] = new $class($this->getClient(), $this->getLogger());
         }
 
         return $this->services[$class];
