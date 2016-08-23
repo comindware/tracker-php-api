@@ -42,7 +42,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @see   http://kb.comindware.com/comindware-tracker/1.0/comindware-expression-language-how-to/
-     * @since x.x
+     * @since 0.2
      */
     public function query($expression, $orderBy, array $properties, $limit = null, $offset = 0)
     {

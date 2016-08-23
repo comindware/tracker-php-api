@@ -27,7 +27,7 @@ class AppService extends Service
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
-     * @since x.x renamed from "getApplications" to "getAll".
+     * @since 0.2 renamed from "getApplications" to "getAll".
      * @since 0.1
      */
     public function getAll()
@@ -60,7 +60,7 @@ class AppService extends Service
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
-     * @since x.x renamed from "getApplication" to "get".
+     * @since 0.2 renamed from "getApplication" to "get".
      * @since 0.1
      */
     public function get($id)

@@ -99,7 +99,7 @@ class Application extends Model
      * @return Workspace[]
      * @throws \UnexpectedValueException
      *
-     * @since x.x
+     * @since 0.2
      */
     public function getWorkspaces()
     {
