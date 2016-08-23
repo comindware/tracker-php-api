@@ -6,6 +6,7 @@ namespace Comindware\Tracker\API\Examples;
 
 use Comindware\Tracker\API\Api;
 use Comindware\Tracker\API\Client;
+use Comindware\Tracker\API\Expression as E;
 use Http\Discovery\HttpClientDiscovery;
 use Http\Discovery\MessageFactoryDiscovery;
 use Http\Discovery\StreamFactoryDiscovery;
@@ -22,7 +23,10 @@ $client = new Client(
 $tracker = new Api($client);
 
 $items = $tracker->items()->query(
-    'AND($container == ID("tracker.4"), $resolved != true)',
+    E::lAnd(
+        E::eq(E::field('container'), E::id(E::str('tracker.4'))),
+        E::notEq(E::field('resolved'), 'true')
+    ),
     ['id' => 'Ascending'],
     ['id', 'title']
 );
@@ -33,5 +37,3 @@ foreach ($items as $item) {
         $item->get('title')
     );
 }
-
-// ds.1929

@@ -1,5 +1,12 @@
 # Change Log
 
+## Unreleased
+
+### Added
+
+- #14: Class `Expression`
+
+
 ## 0.2 - 2016-08-23
 
 ### Added
