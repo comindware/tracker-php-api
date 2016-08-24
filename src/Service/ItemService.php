@@ -30,10 +30,10 @@ class ItemService extends Service
      * By default items are sorted by ID, you can change this with $orderBy argument.
      *
      * @param string     $expression Expression in Comindware Expression Language.
+     * @param array      $properties List of properties to return.
      * @param array|null $orderBy    Sort mode (e. g. ['field' => 'Descending']).
      * @param int|null   $limit      Items to take (100 bu default).
      * @param int        $offset     Items to skip.
-     * @param array      $properties List of properties to return.
      *
      * @return Item[]
      *
