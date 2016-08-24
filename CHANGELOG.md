@@ -13,6 +13,8 @@
 - Improved logging.
 - `Struct\PropertySetStruct::exportItems()` now groups all custom properties under the "properties"
   key.
+- In `Service\ItemService::query()` $orderBy made optional; swapped $orderBy and $properties
+  arguments.
 
 
 ## 0.2 - 2016-08-23

@@ -23,17 +23,17 @@ class ItemService extends Service
      * Get items with a custom query.
      *
      * You can get items in your work environment with a custom query by providing an expression
-     * and
-     * properties you want to extract.
+     * and properties you want to extract.
      *
-     * Additionally you can specify property and direction for sorting if you want the items to be
-     * sorted in a particular way.
+     * You should not add "id" to $properties, it will be added automatically.
      *
-     * @param string   $expression Expression in Comindware Expression Language.
-     * @param array    $orderBy    Sort mode (e. g. ['field' => 'Descending']).
-     * @param array    $properties List of properties to return.
-     * @param int|null $limit      Items to take (100 bu default).
-     * @param int      $offset     Items to skip.
+     * By default items are sorted by ID, you can change this with $orderBy argument.
+     *
+     * @param string     $expression Expression in Comindware Expression Language.
+     * @param array|null $orderBy    Sort mode (e. g. ['field' => 'Descending']).
+     * @param int|null   $limit      Items to take (100 bu default).
+     * @param int        $offset     Items to skip.
+     * @param array      $properties List of properties to return.
      *
      * @return Item[]
      *
@@ -42,24 +42,41 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @see   http://kb.comindware.com/comindware-tracker/1.0/comindware-expression-language-how-to/
+     * @since x.x $orderBy made optional; swapped $orderBy and $properties.
      * @since 0.2
      */
-    public function query($expression, $orderBy, array $properties, $limit = null, $offset = 0)
-    {
-        $params = [
+    public function query(
+        $expression,
+        array $properties,
+        array $orderBy = null,
+        $limit = null,
+        $offset = 0
+    ) {
+        // Ensure "id" property specified.
+        $properties = array_flip($properties);
+        $properties['id'] = true;
+        $properties = array_keys($properties);
+
+        // Set default ordering if needed.
+        if (!$orderBy) {
+            $orderBy = ['id' => 'Ascending'];
+        }
+
+        // Prepare request payload.
+        $payload = [
             'expression' => (string) $expression,
             'sortByColumn' => key($orderBy),
             'sortDirection' => reset($orderBy),
             'properties' => $properties
         ];
 
-        $this->getLogger()->debug('[ItemService::query] ' . json_encode($params));
+        $this->getLogger()->debug('[ItemService::query] Payload: ' . json_encode($payload));
 
         $url = $this->getBase() . 's/Query?rangeSelector.skip=' . $offset;
         if ($limit) {
             $url .= '&rangeSelector.take=' . $limit;
         }
-        $response = $this->client->sendRequest($url, 'POST', $params);
+        $response = $this->client->sendRequest($url, 'POST', $payload);
         try {
             $dataSet = new PropertySetStruct($response);
         } catch (\InvalidArgumentException $e) {
@@ -70,12 +87,6 @@ class ItemService extends Service
         $items = $dataSet->exportItems();
         foreach ($items as $item) {
             try {
-                /*
-                 * API methods are inconsistent. This one returns both regular and custom item
-                 * properties in a single set. So we need this ugly hack to fill Item class
-                 * properly.
-                 */
-                $item['properties'] = $item;
                 $result[] = new Item($item);
             } catch (\InvalidArgumentException $e) {
                 throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
