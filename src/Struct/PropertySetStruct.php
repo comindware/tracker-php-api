@@ -59,17 +59,28 @@ class PropertySetStruct extends AbstractStruct
      *
      * @return array
      *
+     * @since x.x Custom properties grouped in "properties" element.
      * @since 0.2
      */
     public function exportItems()
     {
+        $properties = [];
+        foreach ($this->getProperties() as $property) {
+            $properties[$property['id']] = $property;
+        }
+
         $result = [];
         $sets = $this->getItems();
         foreach ($sets as $set) {
-            $item = [];
+            $item = ['properties' => []];
             /** @var array $set */
             foreach ($set as $key => $values) {
-                $item[$key] = reset($values);
+                $value = reset($values);
+                if ($properties[$key]['isSystem']) {
+                    $item[$key] = $value;
+                } else {
+                    $item['properties'][$key] = $value;
+                }
             }
             $result[] = $item;
         }
@@ -89,7 +100,8 @@ class PropertySetStruct extends AbstractStruct
         return [
             'properties' => [
                 [
-                    'id' => null
+                    'id' => null,
+                    'isSystem' => null
                 ]
             ],
             'items' => null
