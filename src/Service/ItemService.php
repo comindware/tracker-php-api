@@ -9,6 +9,7 @@ namespace Comindware\Tracker\API\Service;
 
 use Comindware\Tracker\API\Exception\UnexpectedValueException;
 use Comindware\Tracker\API\Model\Item;
+use Comindware\Tracker\API\Model\Transition;
 use Comindware\Tracker\API\Struct\PropertySetStruct;
 
 /**
@@ -146,6 +147,38 @@ class ItemService extends Service
             'POST',
             $properties
         );
+    }
+
+    /**
+     * Return possible Transitions for Item.
+     *
+     * @param string $id Item ID.
+     *
+     * @return Transition[]
+     *
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     *
+     * @since x.x
+     */
+    public function getTransitions($id)
+    {
+        $response = $this->client->sendRequest($this->getBase() . '/' . $id . '/Transition');
+        $result = [];
+        if (!is_array($response)) {
+            throw new UnexpectedValueException('Array expected, but got ' . gettype($response));
+        }
+        /** @var array $response */
+        foreach ($response as $item) {
+            try {
+                $result[] = new Transition($item);
+            } catch (\InvalidArgumentException $e) {
+                throw new UnexpectedValueException($e->getMessage(), $e->getCode(), $e);
+            }
+        }
+
+        return $result;
     }
 
     /**

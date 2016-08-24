@@ -4,7 +4,9 @@
 
 ### Added
 
-- #14: Class `Expression`
+- #8: Class `Model\Transition`.
+- #14: Class `Expression`.
+- #8: Method `Service\ItemService::getTransitions()`.
 - Method `Api::setLogger()`.
 - Argument `$logger` to `Service\Service::__construct()` .
 

@@ -106,3 +106,31 @@ $itemId = $api->items()->create('tracker.123', $item);
 ### См. также:
 
 - [examples/item-create.php](examples/item-create.php)
+
+
+## Получение возможных переходов
+
+Метод API: `GET /Api/Item/{id}/Transition`
+
+```php
+public function ItemService::getTransitions( string $id ): Transition[]
+```
+
+### Список параметров
+
+- **$id** — идентификатор [Item](models.ru.md#item).
+
+### Возвращаемые значения
+
+Массив [Transition](models.ru.md#transition).
+
+### Ошибки
+
+Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendrequest).
+
+### Пример
+
+```php
+// $api — instance of Comindware\Tracker\API\Api
+$transitions = $api->items()->getTransitions('123456');
+```
