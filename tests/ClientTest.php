@@ -56,7 +56,8 @@ class ClientTest extends \PHPUnit_Framework_TestCase
         static::assertEquals(
             [
                 'apiKey' => ['my.token'],
-                'Host' => ['example.com']
+                'Host' => ['example.com'],
+                'Content-length' => [0]
             ],
             $request->getHeaders()
         );
