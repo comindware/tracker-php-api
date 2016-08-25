@@ -59,7 +59,7 @@ class PropertySetStruct extends AbstractStruct
      *
      * @return array
      *
-     * @since x.x Custom properties grouped in "properties" element.
+     * @since 0.3 Custom properties grouped in "properties" element.
      * @since 0.2
      */
     public function exportItems()

@@ -43,7 +43,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
      * @see   http://kb.comindware.com/comindware-tracker/1.0/comindware-expression-language-how-to/
-     * @since x.x $orderBy made optional; swapped $orderBy and $properties.
+     * @since 0.3 $orderBy made optional; swapped $orderBy and $properties.
      * @since 0.2
      */
     public function query(
@@ -160,7 +160,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
-     * @since x.x
+     * @since 0.3
      */
     public function getTransitions($id)
     {
@@ -191,7 +191,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
      *
-     * @since x.x
+     * @since 0.3
      */
     public function transit($itemId, $transitionId)
     {

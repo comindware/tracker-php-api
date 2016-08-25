@@ -10,7 +10,7 @@ namespace Comindware\Tracker\API\Model;
 /**
  * Transition between to Item states.
  *
- * @since x.x
+ * @since 0.3
  */
 class Transition extends Model
 {
@@ -19,7 +19,7 @@ class Transition extends Model
      *
      * @return string|null
      *
-     * @since x.x
+     * @since 0.3
      */
     public function getName()
     {
@@ -31,7 +31,7 @@ class Transition extends Model
      *
      * @param string $name
      *
-     * @since x.x
+     * @since 0.3
      */
     public function setName($name)
     {

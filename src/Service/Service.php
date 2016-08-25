@@ -39,7 +39,7 @@ abstract class Service
      * @param Client          $client Tracker API client.
      * @param LoggerInterface $logger Logger.
      *
-     * @since x.x Added $logger argument.
+     * @since 0.3 Added $logger argument.
      * @since 0.1
      */
     public function __construct(Client $client, LoggerInterface $logger)
@@ -62,7 +62,7 @@ abstract class Service
      *
      * @return LoggerInterface
      *
-     * @since x.x
+     * @since 0.3
      */
     public function getLogger()
     {

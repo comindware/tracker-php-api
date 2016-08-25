@@ -12,7 +12,7 @@ namespace Comindware\Tracker\API;
  *
  * @api
  * @see   http://kb.comindware.com/comindware-tracker/1.0/comindware-expression-language-how-to/
- * @since x.x
+ * @since 0.3
  */
 class Expression
 {
@@ -24,7 +24,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function eq($a, $b)
     {
@@ -38,7 +38,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function field($a)
     {
@@ -53,7 +53,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function lAnd($a, $b)
     {
@@ -67,7 +67,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function id($a)
     {
@@ -81,7 +81,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function not($a)
     {
@@ -96,7 +96,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function notEq($a, $b)
     {
@@ -110,7 +110,7 @@ class Expression
      *
      * @return string
      *
-     * @since x.x
+     * @since 0.3
      */
     public static function str($a)
     {
