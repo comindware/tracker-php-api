@@ -182,6 +182,26 @@ class ItemService extends Service
     }
 
     /**
+     * Transit Item to another state.
+     *
+     * @param string $itemId       Item ID.
+     * @param string $transitionId Transition ID.
+     *
+     * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
+     * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
+     * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     *
+     * @since x.x
+     */
+    public function transit($itemId, $transitionId)
+    {
+        $this->client->sendRequest(
+            $this->getBase() . '/' . $itemId . '/Transition/' . $transitionId,
+            'POST'
+        );
+    }
+
+    /**
      * Return base URI path.
      *
      * @return string

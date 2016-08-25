@@ -132,6 +132,8 @@ class Client
                     $request->getHeaderLine('Content-type')
                 )
             );
+        } else {
+            $request = $request->withHeader('Content-length', 0);
         }
 
         try {

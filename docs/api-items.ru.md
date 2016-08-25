@@ -134,3 +134,31 @@ public function ItemService::getTransitions( string $id ): Transition[]
 // $api — instance of Comindware\Tracker\API\Api
 $transitions = $api->items()->getTransitions('123456');
 ```
+
+## Перевод в другое состояние
+
+Метод API: `GET /Api/Item/{id}/Transition/{transition}`
+
+```php
+public function ItemService::transit( string $itemId, string $transitionId ): void
+```
+
+### Список параметров
+
+- **$itemId** — идентификатор [Item](models.ru.md#item).
+- **$transitionId** — идентификатор [Transition](models.ru.md#transition).
+
+### Возвращаемые значения
+
+Метод не возвращает значений.
+
+### Ошибки
+
+Исключения, вбрасываемые [Client::sendRequest](client.ru.md#sendrequest).
+
+### Пример
+
+```php
+// $api — instance of Comindware\Tracker\API\Api
+$api->items()->transit('123456', '3d9c1eb0650f42f8ac1bad7d7e0067ac');
+```
