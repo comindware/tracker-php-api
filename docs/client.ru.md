@@ -26,6 +26,9 @@ public function sendRequest(string $path [, string $method [, array $payload ]])
 
 ### Ошибки
 
+В случае внутренних ошибок (например, неправильное составление запроса HTTP) будет вброшено
+`LogicException`.
+
 Если получен ответ с сообщением об ошибке API, где указан конкретный тип ошибки, будет вброшено
 исключение `Comindware\Tracker\API\Exception\WebApiClientException` или одно из дочерних.
 

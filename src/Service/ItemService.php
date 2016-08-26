@@ -41,6 +41,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @see   http://kb.comindware.com/comindware-tracker/1.0/comindware-expression-language-how-to/
      * @since 0.3 $orderBy made optional; swapped $orderBy and $properties.
@@ -107,6 +108,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.1
      */
@@ -132,6 +134,7 @@ class ItemService extends Service
      * @throws \InvalidArgumentException If Item has no properties.
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.1
      */
@@ -159,6 +162,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.3
      */
@@ -190,6 +194,7 @@ class ItemService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.3
      */

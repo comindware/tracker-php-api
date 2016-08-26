@@ -26,6 +26,7 @@ class AppService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.2 renamed from "getApplications" to "getAll".
      * @since 0.1
@@ -59,6 +60,7 @@ class AppService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.2 renamed from "getApplication" to "get".
      * @since 0.1

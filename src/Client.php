@@ -111,7 +111,9 @@ class Client
      *
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
+     * @since 0.3.1 Throws \LogicException On internal errors.
      * @since 0.1
      */
     public function sendRequest($path, $method = 'GET', array $payload = null)
@@ -133,7 +135,11 @@ class Client
                 )
             );
         } else {
-            $request = $request->withHeader('Content-length', 0);
+            try {
+                $request = $request->withHeader('Content-length', '0');
+            } catch (\InvalidArgumentException $e) {
+                throw new \LogicException($e->getMessage(), $e->getCode(), $e);
+            }
         }
 
         try {
@@ -157,6 +163,7 @@ class Client
         switch ($type) {
             case 'application/json':
                 $this->getLogger()->debug('Response body is a JSON');
+
                 return $this->parseJson((string) $response->getBody());
             // break not needed
             case 'application/octet-stream':

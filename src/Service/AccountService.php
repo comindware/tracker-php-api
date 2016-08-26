@@ -30,6 +30,7 @@ class AccountService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.1
      */
@@ -74,6 +75,7 @@ class AccountService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.1
      */
@@ -109,6 +111,7 @@ class AccountService extends Service
      * @throws \Comindware\Tracker\API\Exception\RuntimeException In case of non-API errors.
      * @throws \Comindware\Tracker\API\Exception\UnexpectedValueException On invalid response.
      * @throws \Comindware\Tracker\API\Exception\WebApiClientException Ore one of descendants.
+     * @throws \LogicException On internal errors.
      *
      * @since 0.1
      */

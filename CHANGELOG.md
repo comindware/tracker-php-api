@@ -1,5 +1,12 @@
 # Change Log
 
+## 0.3.1 - 2016-08-26
+
+### Fixed
+
+- `InvalidArgumentException` on empty `$payload` argument in `Client::sendRequest()`.
+
+
 ## 0.3 - 2016-08-25
 
 ### Added
