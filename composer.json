@@ -18,7 +18,7 @@
         "php": "^5.5 || ^7.0",
         "mekras/class-helpers": "^1.4",
         "php-http/client-implementation": "^1.0",
-        "php-http/multipart-stream-builder": "^0.1",
+        "php-http/multipart-stream-builder": "^1.0",
         "psr/log": "^1.0"
     },
     "require-dev": {
